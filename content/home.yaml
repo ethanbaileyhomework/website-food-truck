@@ -1,0 +1,46 @@
+hero:
+  eyebrow: "Serving Cranbourne with heart"
+  headline: "A welcoming meal for anyone who needs it"
+  subheadline: "Our volunteer-powered food truck offers hot dinners, pantry staples and friendly faces every Tuesday and Thursday night."
+  image: "/images/hero-gathering.svg"
+  ctas:
+    primary:
+      label: "Need a meal? Find us"
+      href: "#service-details"
+    secondary:
+      label: "Volunteer with us"
+      href: "/volunteer"
+whatWeDo:
+  title: "What we do"
+  description: "More than a meal – our team provides nourishment, connection and wraparound care for neighbours doing it tough."
+  cards:
+    - title: "Hot, hearty meals"
+      description: "Chef-prepared dinners, dessert and hot drinks served with dignity."
+      icon: "bowl"
+    - title: "Groceries to go"
+      description: "Fresh produce, pantry staples and toiletries to take home."
+      icon: "basket"
+    - title: "Care & connection"
+      description: "Support workers and volunteers ready to listen and link you in."
+      icon: "hands"
+impact:
+  title: "Community impact"
+  description: "Live service data updates every few minutes from our Google Sheet."
+carousel:
+  title: "Voices from the truck"
+  items:
+    - quote: "It’s not just dinner – it’s where I feel seen and supported."
+      name: "Leah"
+      role: "Guest"
+      image: "/images/testimonial-1.svg"
+    - quote: "Volunteering here reminds me that small acts of kindness matter."
+      name: "Jason"
+      role: "Volunteer"
+      image: "/images/testimonial-2.svg"
+    - quote: "My kids look forward to the truck nights – the team treats us like family."
+      name: "Maree"
+      role: "Parent"
+      image: "/images/testimonial-3.svg"
+seo:
+  title: "Home"
+  description: "Discover how Cranbourne Food Truck serves free meals, groceries and care to our community each week."

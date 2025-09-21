@@ -1,0 +1,7 @@
+<svg width="1440" height="960" viewBox="0 0 1440 960" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1440" height="960" rx="48" fill="#F5F1ED"/>
+  <circle cx="280" cy="280" r="220" fill="#C3423F" opacity="0.12"/>
+  <circle cx="1160" cy="740" r="280" fill="#C3423F" opacity="0.08"/>
+  <path d="M420 640C520 520 680 520 780 640C860 736 1000 768 1140 704" stroke="#C3423F" stroke-width="16" stroke-linecap="round" stroke-linejoin="round" opacity="0.3"/>
+  <text x="120" y="780" fill="#7E2623" font-family="'Segoe UI', sans-serif" font-weight="600" font-size="64">Community gathered around the food truck</text>
+</svg>

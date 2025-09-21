@@ -1,0 +1,27 @@
+story:
+  title: "Our story"
+  body: |
+    Cranbourne Food Truck began in 2016 with one borrowed van and a handful of neighbours who believed no one in our suburb should eat dinner alone. Since then, we’ve cooked tens of thousands of meals and grown into a mobile hub for connection, health and dignity.
+missionVision:
+  title: "Mission & vision"
+  mission: "We serve nourishing food and wraparound care so that everyone in Cranbourne feels seen, supported and valued."
+  vision: "A connected community where neighbours look out for one another and everyone has what they need to thrive."
+impact:
+  title: "Impact pillars"
+  points:
+    - title: "Hospitality"
+      description: "Creating warm, safe spaces with comforting meals served by friendly faces."
+    - title: "Dignity"
+      description: "Choice-driven support, free from judgement, celebrating each person’s strengths."
+    - title: "Collaboration"
+      description: "Working with local agencies, schools and churches to coordinate care."
+partnerships:
+  title: "How we partner"
+  description: "We collaborate with schools, businesses, service clubs and health providers to expand what we can offer guests."
+futurePlans:
+  title: "What’s next"
+  body: |
+    We are working toward expanding service nights, adding a mobile pantry van and launching a hospitality training pathway for young people.
+seo:
+  title: "About us"
+  description: "Meet the team, mission and story behind Cranbourne Food Truck."
