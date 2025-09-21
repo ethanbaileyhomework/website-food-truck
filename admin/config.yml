@@ -1,13 +1,19 @@
 backend:
-  name: github
+  name: auth0
   repo: ethanbaileyhomework/website-food-truck
   branch: main
+  auth0:
+    client_id: XHYcJcf38g4sxWRIb8oV1vxs6DWshcEM
+    auth_domain: dev-v5mynez4v4e08to8.us.auth0.com
+
 media_folder: "public/uploads"
 public_folder: "/uploads"
+
 slug:
   encoding: "ascii"
   clean_accents: true
   sanitize_replacement: "-"
+
 collections:
   - name: "site_settings"
     label: "Site Settings"
