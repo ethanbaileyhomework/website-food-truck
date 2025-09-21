@@ -1,0 +1,7 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F5F1ED"/>
+  <circle cx="260" cy="200" r="180" fill="#C3423F" opacity="0.18"/>
+  <circle cx="940" cy="430" r="220" fill="#C3423F" opacity="0.12"/>
+  <text x="100" y="360" fill="#7E2623" font-family="'Segoe UI', sans-serif" font-size="72" font-weight="700">Cranbourne Food Truck</text>
+  <text x="100" y="440" fill="#7E2623" font-family="'Segoe UI', sans-serif" font-size="36" font-weight="500">Nourishing community with dignity and care</text>
+</svg>

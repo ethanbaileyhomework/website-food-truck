@@ -1,0 +1,29 @@
+sheet:
+  csvUrl: "https://docs.google.com/spreadsheets/d/e/placeholder/pub?gid=0&single=true&output=csv"
+  fieldMapping:
+    date: "date"
+    meals: "meals"
+    guests: "guests"
+    volunteers: "volunteers"
+    groceries: "groceries"
+    notes: "notes"
+  serviceDateFormat: "yyyy-MM-dd"
+fallbackTotals:
+  meals: 12450
+  guests: 7850
+  volunteers: 4200
+  groceries: 5600
+  services: 320
+fallbackLatestService:
+  date: "2024-08-15"
+  meals: 185
+  guests: 132
+  volunteers: 28
+  groceries: 95
+  notes: "Pop-up haircuts and health clinic onsite."
+lookers:
+  statsUrl: "https://lookerstudio.google.com/reporting/placeholder"
+  embedTitle: "Service trends dashboard"
+seo:
+  title: "Stats"
+  description: "Live service numbers and dashboards from Cranbourne Food Truck."

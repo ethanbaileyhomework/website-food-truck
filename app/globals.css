@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-sand text-charcoal font-sans antialiased;
+}
+
+a {
+  @apply text-brand-primary underline-offset-4 transition hover:underline;
+}
+
+::selection {
+  background: rgba(195, 66, 63, 0.25);
+}
