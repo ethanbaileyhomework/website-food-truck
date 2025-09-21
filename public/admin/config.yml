@@ -9,9 +9,30 @@ collections:
   - name: "pages"
     label: "Pages"
     files:
+      - label: "Home"
+        name: "home"
+        file: "app/page.tsx"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Content", name: "body", widget: "markdown" }
+
+      - label: "About"
+        name: "about"
+        file: "app/about/page.tsx"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Content", name: "body", widget: "markdown" }
+
       - label: "Volunteer"
         name: "volunteer"
         file: "app/volunteer/page.tsx"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Content", name: "body", widget: "markdown" }
+
+      - label: "Contact"
+        name: "contact"
+        file: "app/contact/page.tsx"
         fields:
           - { label: "Title", name: "title", widget: "string" }
           - { label: "Content", name: "body", widget: "markdown" }
