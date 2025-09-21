@@ -1,7 +1,11 @@
 backend:
-  name: git-gateway
+  name: auth0
+  repo: ethanbaileyhomework/website-food-truck
   branch: main
-
+  auth0:
+    client_id: XHYcJcf38g4sxWRIb8oV1vxs6DWshcEM
+    domain: dev-v5mynez4v4e08to8.us.auth0.com
+    
 media_folder: "public/images/uploads"
 public_folder: "/images/uploads"
 
