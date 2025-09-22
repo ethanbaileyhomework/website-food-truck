@@ -1,29 +1,48 @@
 import { NextResponse } from "next/server";
-import { readFile } from "node:fs/promises";
-import path from "node:path";
-import YAML from "yaml";
 
+import cmsConfig from "@/admin/config.yml";
+
+export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
-const CONFIG_TEMPLATE_PATH = path.join(process.cwd(), "admin", "config.yml");
+type ConfigData = Record<string, unknown>;
 
-export async function GET() {
+const { configData, configError } = (() => {
   try {
-    const raw = await readFile(CONFIG_TEMPLATE_PATH, "utf8");
-    const parsed = YAML.parse(raw);
-
-    if (!parsed || typeof parsed !== "object") {
+    if (!cmsConfig || typeof cmsConfig !== "object" || Array.isArray(cmsConfig)) {
       throw new Error("Invalid CMS configuration template.");
     }
 
-    return NextResponse.json(parsed as Record<string, unknown>, {
-      headers: { "cache-control": "no-store" },
-    });
+    return { configData: cmsConfig as ConfigData, configError: null };
   } catch (error) {
-    console.error("Failed to load CMS configuration", error);
+    return {
+      configData: null,
+      configError:
+        error instanceof Error
+          ? error
+          : new Error("Unknown error loading CMS configuration."),
+    };
+  }
+})();
+
+export async function GET() {
+  if (configError) {
+    console.error("Failed to load CMS configuration", configError);
     return NextResponse.json(
       { message: "Unable to load CMS configuration." },
       { status: 500 }
     );
   }
+
+  if (!configData) {
+    console.error("CMS configuration not available.");
+    return NextResponse.json(
+      { message: "Unable to load CMS configuration." },
+      { status: 500 }
+    );
+  }
+
+  return NextResponse.json(configData, {
+    headers: { "cache-control": "no-store" },
+  });
 }
