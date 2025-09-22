@@ -32,7 +32,9 @@ export function Hero({ hero, service }: { hero: HomeHero; service?: ServiceDetai
           {service && (
             <div className="grid gap-3 rounded-2xl bg-white/80 p-5 shadow-soft backdrop-blur">
               <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-brand-primary/80">This week’s service</p>
+                <p className="text-sm font-semibold uppercase tracking-wide text-brand-primary/80">
+                  {service.labels?.heroEyebrow ?? "This week’s service"}
+                </p>
                 <p className="text-lg font-semibold text-charcoal">{service.title}</p>
               </div>
               <dl className="grid gap-2 text-sm text-charcoal/85 sm:grid-cols-2">
@@ -67,7 +69,7 @@ export function Hero({ hero, service }: { hero: HomeHero; service?: ServiceDetai
             <div className="relative aspect-[4/3] w-full max-w-xl">
               <Image
                 src={hero.image}
-                alt="Community members gathered at the Cranbourne Food Truck"
+                alt={hero.imageAlt ?? hero.headline}
                 fill
                 className="rounded-3xl object-cover shadow-soft"
                 priority

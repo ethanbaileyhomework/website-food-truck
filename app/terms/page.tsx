@@ -1,18 +1,23 @@
-export const metadata = {
-  title: "Terms",
-  description: "Terms of use placeholder for Cranbourne Food Truck.",
-};
+import type { Metadata } from "next";
 
-export default function TermsPage() {
+import { MarkdownRenderer } from "@/components/shared/markdown-renderer";
+import { getLegalPage } from "@/lib/content";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getLegalPage("terms");
+  return {
+    title: page.title,
+    description: page.description,
+  };
+}
+
+export default async function TermsPage() {
+  const page = await getLegalPage("terms");
+
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <h1 className="text-4xl font-semibold text-charcoal">Terms of use</h1>
-      <p className="text-base text-charcoal/75">
-        This is a placeholder terms of use page. Provide your service terms through the CMS or by editing app/terms/page.tsx with the appropriate information.
-      </p>
-      <p className="text-base text-charcoal/75">
-        Contact us at <a className="text-brand-primary" href="mailto:hello@cranbournefoodtruck.com">hello@cranbournefoodtruck.com</a> with any questions.
-      </p>
+      <h1 className="text-4xl font-semibold text-charcoal">{page.title}</h1>
+      <MarkdownRenderer content={page.body} />
     </div>
   );
 }

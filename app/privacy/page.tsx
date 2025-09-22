@@ -1,18 +1,23 @@
-export const metadata = {
-  title: "Privacy",
-  description: "Privacy statement placeholder for Cranbourne Food Truck.",
-};
+import type { Metadata } from "next";
 
-export default function PrivacyPage() {
+import { MarkdownRenderer } from "@/components/shared/markdown-renderer";
+import { getLegalPage } from "@/lib/content";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const page = await getLegalPage("privacy");
+  return {
+    title: page.title,
+    description: page.description,
+  };
+}
+
+export default async function PrivacyPage() {
+  const page = await getLegalPage("privacy");
+
   return (
     <div className="mx-auto max-w-3xl space-y-6">
-      <h1 className="text-4xl font-semibold text-charcoal">Privacy statement</h1>
-      <p className="text-base text-charcoal/75">
-        This is a placeholder privacy statement. Update this page through the CMS or by editing app/privacy/page.tsx with your organisation’s privacy policy.
-      </p>
-      <p className="text-base text-charcoal/75">
-        For questions please email <a className="text-brand-primary" href="mailto:hello@cranbournefoodtruck.com">hello@cranbournefoodtruck.com</a>.
-      </p>
+      <h1 className="text-4xl font-semibold text-charcoal">{page.title}</h1>
+      <MarkdownRenderer content={page.body} />
     </div>
   );
 }

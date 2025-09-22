@@ -21,7 +21,7 @@ export default async function DonatePage() {
         <h1 className="text-4xl font-semibold text-charcoal sm:text-5xl">{donate.introTitle}</h1>
         <MarkdownRenderer content={donate.introBody} />
       </header>
-      <DonateBox bank={settings.bank} donate={settings.donate} />
+      <DonateBox bank={settings.bank} donate={settings.donate} copy={settings.donationCopy} />
     </div>
   );
 }

@@ -24,6 +24,20 @@ collections:
           - { label: "Tagline", name: "siteTagline", widget: "string", required: false }
           - { label: "Logo", name: "logo", widget: "image", required: false }
           - { label: "Primary Color", name: "primaryColor", widget: "color", default: "#C3423F" }
+          - label: "Navigation"
+            name: "navigation"
+            widget: "list"
+            required: false
+            fields:
+              - { label: "Label", name: "label", widget: "string" }
+              - { label: "Link", name: "href", widget: "string" }
+              - label: "Style"
+                name: "variant"
+                widget: "select"
+                required: false
+                options:
+                  - { label: "Link", value: "link" }
+                  - { label: "Button", value: "button" }
           - label: "Contact"
             name: "contact"
             widget: "object"
@@ -57,6 +71,36 @@ collections:
               - { label: "PayPal Donate URL", name: "paypal", widget: "string", required: false }
               - { label: "Stripe Checkout URL", name: "stripe", widget: "string", required: false }
               - { label: "Donation Note", name: "note", widget: "text", required: false }
+          - label: "Donation Copy"
+            name: "donationCopy"
+            widget: "object"
+            required: false
+            fields:
+              - label: "Bank Section"
+                name: "bankSection"
+                widget: "object"
+                required: false
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string", required: false }
+                  - { label: "Title", name: "title", widget: "string", required: false }
+                  - label: "Field Labels"
+                    name: "fieldLabels"
+                    widget: "object"
+                    required: false
+                    fields:
+                      - { label: "Account Name", name: "accountName", widget: "string", required: false }
+                      - { label: "BSB", name: "bsb", widget: "string", required: false }
+                      - { label: "Account Number", name: "accountNumber", widget: "string", required: false }
+                      - { label: "Reference", name: "reference", widget: "string", required: false }
+              - label: "Online Section"
+                name: "onlineSection"
+                widget: "object"
+                required: false
+                fields:
+                  - { label: "Eyebrow", name: "eyebrow", widget: "string", required: false }
+                  - { label: "Title", name: "title", widget: "string", required: false }
+                  - { label: "PayPal Button Label", name: "paypalLabel", widget: "string", required: false }
+                  - { label: "Stripe Button Label", name: "stripeLabel", widget: "string", required: false }
           - label: "Map"
             name: "map"
             widget: "object"
@@ -79,6 +123,17 @@ collections:
                 widget: "list"
                 field: { label: "Note", name: "note", widget: "string" }
               - { label: "Directions Button Label", name: "ctaLabel", widget: "string", required: false }
+              - label: "Labels"
+                name: "labels"
+                widget: "object"
+                required: false
+                fields:
+                  - { label: "Hero Card Eyebrow", name: "heroEyebrow", widget: "string", required: false }
+                  - { label: "Section Eyebrow", name: "sectionEyebrow", widget: "string", required: false }
+                  - { label: "Notes Title", name: "notesTitle", widget: "string", required: false }
+                  - { label: "Call Button Label", name: "callCta", widget: "string", required: false }
+                  - { label: "Email Button Label", name: "emailCta", widget: "string", required: false }
+                  - { label: "Map Title", name: "mapTitle", widget: "string", required: false }
           - label: "Looker Studio"
             name: "lookers"
             widget: "object"
@@ -86,6 +141,30 @@ collections:
               - { label: "Dashboard URL", name: "statsUrl", widget: "string", required: false }
               - { label: "Embed Title", name: "embedTitle", widget: "string", required: false }
           - { label: "Tally Form URL", name: "tallyFormUrl", widget: "string", required: false }
+          - label: "Volunteer Form"
+            name: "volunteerForm"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Placeholder Title", name: "placeholderTitle", widget: "string", required: false }
+              - { label: "Placeholder Body", name: "placeholderBody", widget: "text", required: false }
+              - { label: "Iframe Title", name: "iframeTitle", widget: "string", required: false }
+          - label: "Footer"
+            name: "footer"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Contact Heading", name: "contactHeading", widget: "string", required: false }
+              - { label: "Contact Body", name: "contactBody", widget: "text", required: false }
+              - { label: "Social Heading", name: "socialHeading", widget: "string", required: false }
+              - { label: "Bottom Note", name: "bottomNote", widget: "string", required: false }
+              - label: "Footer Links"
+                name: "links"
+                widget: "list"
+                required: false
+                fields:
+                  - { label: "Label", name: "label", widget: "string" }
+                  - { label: "Link", name: "href", widget: "string" }
           - label: "Analytics"
             name: "analytics"
             widget: "object"
@@ -114,6 +193,7 @@ collections:
               - { label: "Headline", name: "headline", widget: "string" }
               - { label: "Subheadline", name: "subheadline", widget: "text", required: false }
               - { label: "Hero Image", name: "image", widget: "image", required: false }
+              - { label: "Hero Image Alt Text", name: "imageAlt", widget: "string", required: false }
               - label: "CTAs"
                 name: "ctas"
                 widget: "object"
@@ -214,6 +294,52 @@ collections:
               - { label: "Volunteers", name: "volunteers", widget: "number" }
               - { label: "Groceries", name: "groceries", widget: "number" }
               - { label: "Notes", name: "notes", widget: "text", required: false }
+          - label: "Page Copy"
+            name: "page"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Heading", name: "heading", widget: "string", required: false }
+              - { label: "Intro", name: "intro", widget: "text", required: false }
+          - label: "Latest Service Section"
+            name: "latestSection"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Eyebrow", name: "eyebrow", widget: "string", required: false }
+              - { label: "Screen Reader Label", name: "srLabel", widget: "string", required: false }
+              - { label: "Streaming Message", name: "streamingMessage", widget: "text", required: false }
+              - { label: "Fallback Message", name: "fallbackMessage", widget: "text", required: false }
+              - label: "Metric Labels"
+                name: "metrics"
+                widget: "object"
+                required: false
+                fields:
+                  - { label: "Meals", name: "meals", widget: "string", required: false }
+                  - { label: "Guests", name: "guests", widget: "string", required: false }
+                  - { label: "Volunteers", name: "volunteers", widget: "string", required: false }
+                  - { label: "Groceries", name: "groceries", widget: "string", required: false }
+          - label: "Totals Section"
+            name: "totalsSection"
+            widget: "object"
+            required: false
+            fields:
+              - label: "Metric Labels"
+                name: "metrics"
+                widget: "object"
+                required: false
+                fields:
+                  - { label: "Meals", name: "meals", widget: "string", required: false }
+                  - { label: "Guests", name: "guests", widget: "string", required: false }
+                  - { label: "Volunteers", name: "volunteers", widget: "string", required: false }
+                  - { label: "Services", name: "services", widget: "string", required: false }
+          - label: "Dashboard Section"
+            name: "dashboardSection"
+            widget: "object"
+            required: false
+            fields:
+              - { label: "Title", name: "title", widget: "string", required: false }
+              - { label: "Description", name: "description", widget: "text", required: false }
           - label: "Looker Studio"
             name: "lookers"
             widget: "object"
@@ -374,4 +500,23 @@ collections:
       - { label: "Logo", name: "logo", widget: "image", required: false }
       - { label: "Blurb", name: "blurb", widget: "markdown", required: false }
       - { label: "Category", name: "category", widget: "select", options: ["sponsor", "partner"], required: false }
+  - name: "legal"
+    label: "Legal Pages"
+    editor:
+      preview: false
+    files:
+      - label: "Privacy Policy"
+        name: "privacy"
+        file: "content/legal/privacy.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string", required: false }
+          - { label: "Body", name: "body", widget: "markdown" }
+      - label: "Terms of Use"
+        name: "terms"
+        file: "content/legal/terms.md"
+        fields:
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "string", required: false }
+          - { label: "Body", name: "body", widget: "markdown" }
       - { label: "Display Order", name: "order", widget: "number", required: false }

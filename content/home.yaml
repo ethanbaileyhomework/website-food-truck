@@ -3,6 +3,7 @@ hero:
   headline: "A welcoming meal for anyone who needs it"
   subheadline: "Our volunteer-powered food truck offers hot dinners, pantry staples and friendly faces every Tuesday and Thursday night."
   image: "/images/hero-gathering.svg"
+  imageAlt: "Community members gathered at the Cranbourne Food Truck"
   ctas:
     primary:
       label: "Need a meal? Find us"

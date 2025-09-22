@@ -15,19 +15,18 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function StatsPage() {
   const [stats, site] = await Promise.all([getStatsSettings(), getSiteSettings()]);
 
+  const heading = stats.page?.heading ?? "Service stats";
+  const intro = stats.page?.intro ??
+    "Live counts of meals, guests and volunteers powered by our Google Sheet. Explore deeper trends via the interactive dashboard below.";
+
   return (
     <div className="mx-auto max-w-6xl space-y-12">
       <header className="space-y-4 text-center">
-        <h1 className="text-4xl font-semibold text-charcoal sm:text-5xl">Service stats</h1>
-        <p className="mx-auto max-w-2xl text-base text-charcoal/75">
-          Live counts of meals, guests and volunteers powered by our Google Sheet. Explore deeper trends via the interactive dashboard below.
-        </p>
+        <h1 className="text-4xl font-semibold text-charcoal sm:text-5xl">{heading}</h1>
+        {intro && <p className="mx-auto max-w-2xl text-base text-charcoal/75">{intro}</p>}
       </header>
-      <KPIBar
-        fallbackTotals={stats.fallbackTotals}
-        fallbackLatestService={stats.fallbackLatestService}
-      />
-      <LookerEmbed looker={stats.lookers ?? site.lookers} />
+      <KPIBar stats={stats} />
+      <LookerEmbed looker={stats.lookers ?? site.lookers} dashboard={stats.dashboardSection} />
     </div>
   );
 }

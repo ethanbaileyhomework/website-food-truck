@@ -21,6 +21,28 @@ fallbackLatestService:
   volunteers: 28
   groceries: 95
   notes: "Pop-up haircuts and health clinic onsite."
+page:
+  heading: "Service stats"
+  intro: "Live counts of meals, guests and volunteers powered by our Google Sheet. Explore deeper trends via the interactive dashboard below."
+latestSection:
+  eyebrow: "Latest service"
+  srLabel: "Most recent service"
+  streamingMessage: "Streaming directly from our Google Sheet"
+  fallbackMessage: "Showing fallback numbers from CMS"
+  metrics:
+    meals: "Meals served"
+    guests: "Guests welcomed"
+    volunteers: "Volunteers rostered"
+    groceries: "Grocery packs"
+totalsSection:
+  metrics:
+    meals: "Total meals"
+    guests: "Guests welcomed"
+    volunteers: "Volunteers"
+    services: "Services"
+dashboardSection:
+  title: "Interactive dashboard"
+  description: "Explore the full service trends dashboard below."
 lookers:
   statsUrl: "https://lookerstudio.google.com/reporting/placeholder"
   embedTitle: "Service trends dashboard"

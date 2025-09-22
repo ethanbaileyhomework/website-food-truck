@@ -58,7 +58,7 @@ export default async function RootLayout({
         <StructuredData settings={settings} />
       </head>
       <body className="min-h-screen bg-sand text-charcoal">
-        <Header siteName={settings.siteName} />
+        <Header settings={settings} />
         <IdentityRedirect />
         <main className="px-4 pb-16 pt-8 sm:px-6 lg:px-8">{children}</main>
         <Footer settings={settings} />

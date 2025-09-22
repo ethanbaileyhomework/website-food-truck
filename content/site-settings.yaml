@@ -2,6 +2,20 @@ siteName: Cranbourne Food Truck
 siteTagline: Nourishing community with dignity and care.
 logo: ""
 primaryColor: "#C3423F"
+navigation:
+  - label: "Home"
+    href: "/"
+  - label: "Stats"
+    href: "/stats"
+  - label: "Donate"
+    href: "/donate"
+    variant: "button"
+  - label: "Volunteer"
+    href: "/volunteer"
+  - label: "About Us"
+    href: "/about"
+  - label: "Sponsors & Partners"
+    href: "/sponsors"
 contact:
   email: "hello@cranbournefoodtruck.com"
   phone: "(03) 9000 0000"
@@ -23,6 +37,20 @@ donate:
   paypal: "https://www.paypal.com/donate"
   stripe: "https://buy.stripe.com/test_1234567890"
   note: "Donations of $2 or more are tax deductible. Receipts issued within 5 business days."
+donationCopy:
+  bankSection:
+    eyebrow: "Direct deposit"
+    title: "Bank transfer details"
+    fieldLabels:
+      accountName: "Account name"
+      bsb: "BSB"
+      accountNumber: "Account number"
+      reference: "Reference"
+  onlineSection:
+    eyebrow: "Give online"
+    title: "Secure donate links"
+    paypalLabel: "Donate via PayPal"
+    stripeLabel: "Donate via Stripe"
 map:
   embedUrl: "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345098575!2d144.9556513153166!3d-37.817327979751795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ5JzAyLjQiUyAxNDTCsDU3JzI2LjAiRQ!5e0!3m2!1sen!2sau!4v1613960648896!5m2!1sen!2sau"
   directionsUrl: "https://maps.google.com/?q=Cranbourne+Community+Hub"
@@ -39,10 +67,31 @@ service:
     - "Family friendly space with play corner."
     - "Bring your own containers if you can."
   ctaLabel: "View directions"
+  labels:
+    heroEyebrow: "This week’s service"
+    sectionEyebrow: "Service details"
+    notesTitle: "What to expect"
+    callCta: "Call us"
+    emailCta: "Email the team"
+    mapTitle: "Service location map"
 lookers:
   statsUrl: "https://lookerstudio.google.com/reporting/placeholder"
   embedTitle: "Cranbourne Food Truck Service Trends"
 tallyFormUrl: "https://tally.so/r/placeholder"
+volunteerForm:
+  placeholderTitle: "Volunteer form coming soon"
+  placeholderBody: "Add your Tally.so form URL in the CMS to display it here."
+  iframeTitle: "Volunteer expression of interest form"
+footer:
+  contactHeading: "Stay connected"
+  contactBody: "We’re here to serve our Cranbourne neighbours with warmth and dignity."
+  socialHeading: "Follow our journey"
+  bottomNote: "Built with care for the Cranbourne community."
+  links:
+    - label: "Privacy"
+      href: "/privacy"
+    - label: "Terms"
+      href: "/terms"
 analytics:
   gaMeasurementId: ""
 seo:

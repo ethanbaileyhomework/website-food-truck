@@ -8,6 +8,7 @@ import type {
   AboutContent,
   DonateContent,
   HomeContent,
+  LegalPageContent,
   Partner,
   SiteSettings,
   SponsorsContent,
@@ -32,6 +33,12 @@ const readYamlFile = cache(async <T>(fileName: string): Promise<T> => {
   const filePath = path.join(CONTENT_DIR, fileName);
   const file = await readFileSafe(filePath);
   return YAML.parse(file) as T;
+});
+
+const readMarkdownFile = cache(async (fileName: string) => {
+  const filePath = path.join(CONTENT_DIR, fileName);
+  const file = await readFileSafe(filePath);
+  return matter(file);
 });
 
 async function readMarkdownCollection<T extends { slug: string }>(
@@ -147,4 +154,15 @@ export const getPartners = cache(async (): Promise<Partner[]> => {
   });
 
   return partners.sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+});
+
+export const getLegalPage = cache(async (slug: "privacy" | "terms"): Promise<LegalPageContent> => {
+  const { data, content } = await readMarkdownFile(path.join("legal", `${slug}.md`));
+  const record = data as Record<string, unknown>;
+
+  return {
+    title: typeof record.title === "string" ? record.title : slug,
+    description: typeof record.description === "string" ? record.description : undefined,
+    body: content.trim(),
+  } satisfies LegalPageContent;
 });
