@@ -1,11 +1,6 @@
 backend:
-  name: auth0
-  repo: ethanbaileyhomework/website-food-truck
+  name: git-gateway
   branch: main
-  auth0:
-    # The Auth0 credentials are injected at runtime by the admin config API route.
-    client_id: ""
-    auth_domain: ""
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
