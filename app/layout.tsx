@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 
 import { Analytics } from "@/components/layout/analytics";
+import { IdentityRedirect } from "@/components/layout/identity-redirect";
 import { Footer } from "@/components/layout/footer";
 import { Header } from "@/components/layout/header";
 import { StructuredData } from "@/components/layout/structured-data";
@@ -58,6 +59,7 @@ export default async function RootLayout({
       </head>
       <body className="min-h-screen bg-sand text-charcoal">
         <Header siteName={settings.siteName} />
+        <IdentityRedirect />
         <main className="px-4 pb-16 pt-8 sm:px-6 lg:px-8">{children}</main>
         <Footer settings={settings} />
         <Analytics measurementId={settings.analytics?.gaMeasurementId} />
