@@ -5,7 +5,12 @@ import YAML from "yaml";
 
 export const dynamic = "force-dynamic";
 
-const CONFIG_TEMPLATE_PATH = path.join(process.cwd(), "admin", "config.yml");
+const CONFIG_TEMPLATE_PATH = path.join(
+  process.cwd(),
+  "public",
+  "admin",
+  "config.yml"
+);
 
 export async function GET() {
   try {
