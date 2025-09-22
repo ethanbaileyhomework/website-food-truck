@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import type { SiteSettings } from "@/lib/types";
+import type { FooterLink, SiteSettings } from "@/lib/types";
 import { ensureHttps } from "@/lib/utils";
 
 const socialLabels: Record<string, string> = {
@@ -14,15 +14,26 @@ const socialLabels: Record<string, string> = {
 
 export function Footer({ settings }: { settings: SiteSettings }) {
   const { contact, socials } = settings;
+  const footerCopy = settings.footer ?? {};
+  const contactHeading = footerCopy.contactHeading ?? "Stay connected";
+  const contactBody =
+    footerCopy.contactBody ?? settings.siteTagline ?? "We’re here to serve our Cranbourne neighbours with warmth and dignity.";
+  const socialHeading = footerCopy.socialHeading ?? "Follow our journey";
+  const footerLinks: FooterLink[] =
+    footerCopy.links && footerCopy.links.length > 0
+      ? footerCopy.links
+      : [
+          { label: "Privacy", href: "/privacy" },
+          { label: "Terms", href: "/terms" },
+        ];
+  const bottomNote = footerCopy.bottomNote ?? "Built with care for the Cranbourne community.";
 
   return (
     <footer className="mt-16 border-t border-white/60 bg-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 sm:px-6 md:grid-cols-2 lg:px-8">
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-charcoal">Stay connected</h2>
-          <p className="max-w-lg text-sm text-charcoal/80">
-            {settings.siteTagline ?? "We’re here to serve our Cranbourne neighbours with warmth and dignity."}
-          </p>
+          <h2 className="text-xl font-semibold text-charcoal">{contactHeading}</h2>
+          {contactBody && <p className="max-w-lg text-sm text-charcoal/80">{contactBody}</p>}
           <div className="space-y-2 text-sm">
             {contact?.email && (
               <p>
@@ -53,7 +64,7 @@ export function Footer({ settings }: { settings: SiteSettings }) {
           </div>
         </div>
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-charcoal">Follow our journey</h2>
+          <h2 className="text-xl font-semibold text-charcoal">{socialHeading}</h2>
           <div className="flex flex-wrap gap-3">
             {socials &&
               Object.entries(socials)
@@ -74,13 +85,12 @@ export function Footer({ settings }: { settings: SiteSettings }) {
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 py-6 text-xs text-charcoal/70 sm:flex-row sm:px-6 lg:px-8">
           <p>© {new Date().getFullYear()} {settings.siteName}. All rights reserved.</p>
           <div className="flex flex-wrap items-center gap-4">
-            <Link href="/privacy" className="hover:text-brand-primary">
-              Privacy
-            </Link>
-            <Link href="/terms" className="hover:text-brand-primary">
-              Terms
-            </Link>
-            <span>Built with care for the Cranbourne community.</span>
+            {footerLinks.map((link) => (
+              <Link key={link.href} href={link.href} className="hover:text-brand-primary">
+                {link.label}
+              </Link>
+            ))}
+            {bottomNote && <span>{bottomNote}</span>}
           </div>
         </div>
       </div>

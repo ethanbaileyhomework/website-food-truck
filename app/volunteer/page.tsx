@@ -21,7 +21,7 @@ export default async function VolunteerPage() {
         <h1 className="text-4xl font-semibold text-charcoal sm:text-5xl">{volunteer.introTitle}</h1>
         <MarkdownRenderer content={volunteer.introBody} />
       </header>
-      <TallyEmbed tallyUrl={settings.tallyFormUrl} />
+      <TallyEmbed tallyUrl={settings.tallyFormUrl} form={settings.volunteerForm} />
     </div>
   );
 }

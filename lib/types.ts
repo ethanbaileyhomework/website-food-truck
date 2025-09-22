@@ -28,9 +28,37 @@ export type DonateLinks = {
   note?: string;
 };
 
+export type DonationCopy = {
+  bankSection?: {
+    eyebrow?: string;
+    title?: string;
+    fieldLabels?: {
+      accountName?: string;
+      bsb?: string;
+      accountNumber?: string;
+      reference?: string;
+    };
+  };
+  onlineSection?: {
+    eyebrow?: string;
+    title?: string;
+    paypalLabel?: string;
+    stripeLabel?: string;
+  };
+};
+
 export type MapSettings = {
   embedUrl?: string;
   directionsUrl?: string;
+};
+
+export type ServiceLabels = {
+  heroEyebrow?: string;
+  sectionEyebrow?: string;
+  notesTitle?: string;
+  callCta?: string;
+  emailCta?: string;
+  mapTitle?: string;
 };
 
 export type ServiceDetails = {
@@ -43,6 +71,7 @@ export type ServiceDetails = {
   email?: string;
   notes?: string[];
   ctaLabel?: string;
+  labels?: ServiceLabels;
 };
 
 export type LookerSettings = {
@@ -52,6 +81,31 @@ export type LookerSettings = {
 
 export type AnalyticsSettings = {
   gaMeasurementId?: string;
+};
+
+export type NavigationItem = {
+  label: string;
+  href: string;
+  variant?: "link" | "button";
+};
+
+export type FooterLink = {
+  label: string;
+  href: string;
+};
+
+export type FooterSettings = {
+  contactHeading?: string;
+  contactBody?: string;
+  socialHeading?: string;
+  bottomNote?: string;
+  links?: FooterLink[];
+};
+
+export type VolunteerFormSettings = {
+  placeholderTitle?: string;
+  placeholderBody?: string;
+  iframeTitle?: string;
 };
 
 export type SeoSettings = {
@@ -66,12 +120,16 @@ export type SiteSettings = {
   primaryColor?: string;
   contact: ContactDetails;
   socials?: SocialLinks;
+  navigation?: NavigationItem[];
   bank?: BankDetails;
   donate?: DonateLinks;
+  donationCopy?: DonationCopy;
   map?: MapSettings;
   service?: ServiceDetails;
   lookers?: LookerSettings;
   tallyFormUrl?: string;
+  volunteerForm?: VolunteerFormSettings;
+  footer?: FooterSettings;
   analytics?: AnalyticsSettings;
   seo?: SeoSettings;
 };
@@ -86,6 +144,7 @@ export type HomeHero = {
   headline: string;
   subheadline?: string;
   image?: string;
+  imageAlt?: string;
   ctas: {
     primary: HomeHeroCta;
     secondary?: HomeHeroCta;
@@ -163,6 +222,34 @@ export type StatsSettings = {
     notes?: string;
   };
   lookers?: LookerSettings;
+  page?: {
+    heading?: string;
+    intro?: string;
+  };
+  latestSection?: {
+    eyebrow?: string;
+    srLabel?: string;
+    streamingMessage?: string;
+    fallbackMessage?: string;
+    metrics?: {
+      meals?: string;
+      guests?: string;
+      volunteers?: string;
+      groceries?: string;
+    };
+  };
+  totalsSection?: {
+    metrics?: {
+      meals?: string;
+      guests?: string;
+      volunteers?: string;
+      services?: string;
+    };
+  };
+  dashboardSection?: {
+    title?: string;
+    description?: string;
+  };
   seo?: {
     title?: string;
     description?: string;
@@ -253,6 +340,12 @@ export type SponsorsContent = {
     title?: string;
     description?: string;
   };
+};
+
+export type LegalPageContent = {
+  title: string;
+  description?: string;
+  body: string;
 };
 
 export type StatsApiLatestService = {
