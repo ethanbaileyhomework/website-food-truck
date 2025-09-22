@@ -5,6 +5,40 @@
     <title>Content Manager</title>
   </head>
   <body>
-    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+    <script>
+      window.CMS_MANUAL_INIT = true;
+
+      async function initCms() {
+        try {
+          const response = await fetch("/api/admin/config");
+
+          if (!response.ok) {
+            throw new Error(`Failed to load CMS config: ${response.status}`);
+          }
+
+          const config = await response.json();
+          window.CMS.init({ config });
+        } catch (error) {
+          console.error("CMS initialization failed", error);
+
+          const message = document.createElement("p");
+          message.textContent = "Failed to load the content manager configuration.";
+          message.style.fontFamily =
+            'system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
+          message.style.padding = "1.5rem";
+          message.style.color = "#b91c1c";
+          document.body.appendChild(message);
+        } finally {
+          delete window.__initCms;
+        }
+      }
+
+      window.__initCms = initCms;
+    </script>
+    <script
+      src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"
+      onload="window.__initCms()"
+      defer
+    ></script>
   </body>
 </html>
