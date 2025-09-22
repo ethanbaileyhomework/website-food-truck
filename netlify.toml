@@ -4,7 +4,7 @@ publish = ".next"
 
 [functions]
 node_bundler = "esbuild"
-included_files = ["public/**/*", "admin/config.yml"]
+included_files = ["public/**/*", "public/admin/config.yml"]
 
 [[plugins]]
 package = "@netlify/plugin-nextjs"

@@ -51,6 +51,7 @@
       window.CMS_MANUAL_INIT = true;
     </script>
     <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
     <script>
       (function () {
         function renderError(message) {
@@ -67,12 +68,38 @@
           document.body.appendChild(container);
         }
 
-        async function loadConfig() {
-          var response = await fetch("/api/admin/config", { cache: "no-store" });
+        function parseYamlConfig(text) {
+          if (!window.jsyaml || typeof window.jsyaml.load !== "function") {
+            throw new Error("YAML parser failed to load.");
+          }
+          return window.jsyaml.load(text);
+        }
+
+        async function fetchJsonConfig(url) {
+          var response = await fetch(url, { cache: "no-store" });
           if (!response.ok) {
-            throw new Error("Failed to load CMS configuration (" + response.status + ").");
+            throw new Error("Failed to load CMS configuration (" + response.status + ") from " + url + ".");
           }
           return response.json();
+        }
+
+        async function fetchYamlConfig(url) {
+          var response = await fetch(url, { cache: "no-store" });
+          if (!response.ok) {
+            throw new Error("Failed to load CMS configuration (" + response.status + ") from " + url + ".");
+          }
+          var text = await response.text();
+          return parseYamlConfig(text);
+        }
+
+        async function loadConfig() {
+          try {
+            return await fetchJsonConfig("/api/admin/config");
+          } catch (error) {
+            console.warn("Falling back to static CMS config", error);
+          }
+
+          return fetchYamlConfig("/admin/config.yml");
         }
 
         async function initialiseCMS() {
