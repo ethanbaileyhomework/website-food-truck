@@ -36,6 +36,7 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
    - `DECAP_GITHUB_REPO` – `owner/repo` slug for this site.
    - `DECAP_BACKEND_BRANCH` – optional override if your default branch is not `main`.
    - `DECAP_GITHUB_APP_ID` – client/app ID from your GitHub OAuth integration (optional but recommended when using GitHub Apps).
+   - `DECAP_GITHUB_CLIENT_ID` / `DECAP_GITHUB_CLIENT_SECRET` – credentials for the built-in GitHub OAuth flow (alternatively, set `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET`).
    - `DECAP_OAUTH_BASE_URL` – origin for your OAuth provider (for example `https://cms-auth.example.com`).
    - `DECAP_OAUTH_ENDPOINT` – endpoint path served by the provider (for example `/api/auth`).
    - `DECAP_SITE_URL` / `DECAP_DISPLAY_URL` – optional values to control site and preview URLs displayed inside the CMS UI.
