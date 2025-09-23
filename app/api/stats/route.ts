@@ -6,6 +6,7 @@ import statsSettingsSource from "@/content/stats-settings.yaml";
 import type { StatsApiResponse, StatsSettings } from "@/lib/types";
 
 const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
+const CSV_REQUEST_TIMEOUT = 8 * 1000; // 8 seconds
 
 type CacheEntry = {
   timestamp: number;
@@ -50,7 +51,7 @@ export async function GET() {
   }
 
   try {
-    const response = await fetch(stats.sheet.csvUrl, {
+    const response = await fetchWithTimeout(stats.sheet.csvUrl, {
       next: { revalidate: CACHE_DURATION / 1000 },
     });
 
@@ -132,7 +133,13 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Stats API error", error);
+    if (error instanceof Error && error.name === "TimeoutError") {
+      console.error("Stats API request timed out", error);
+    } else if (error instanceof Error && error.name === "AbortError") {
+      console.error("Stats API request aborted", error);
+    } else {
+      console.error("Stats API error", error);
+    }
     const fallback = buildFallback(stats);
     globalForStats.__statsCache = { timestamp: now, data: fallback };
     return NextResponse.json(fallback, {
@@ -140,5 +147,33 @@ export async function GET() {
         "cache-control": "public, max-age=120",
       },
     });
+  }
+}
+
+async function fetchWithTimeout(
+  url: string,
+  init?: RequestInit & { next?: { revalidate?: number } },
+  timeoutMs = CSV_REQUEST_TIMEOUT
+) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    return await fetch(url, {
+      ...init,
+      signal: controller.signal,
+    });
+  } catch (error) {
+    if (controller.signal.aborted) {
+      const timeoutError = new Error(`Request for ${url} timed out after ${timeoutMs}ms`, {
+        cause: error instanceof Error ? error : undefined,
+      });
+      timeoutError.name = "TimeoutError";
+      throw timeoutError;
+    }
+
+    throw error;
+  } finally {
+    clearTimeout(timeoutId);
   }
 }
