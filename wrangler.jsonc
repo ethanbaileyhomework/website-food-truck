@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "website-food-truck",
+  "name": "cranbournefoodtruck",
   "main": ".open-next/worker.js",
   "build": {
     "command": "npm run cf:build -- --skipBuild"
