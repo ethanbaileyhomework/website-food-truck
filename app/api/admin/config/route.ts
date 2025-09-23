@@ -30,7 +30,8 @@ function applyRuntimeOverrides(config: ConfigData) {
   if (backendName === "github") {
     const repo =
       process.env.DECAP_GITHUB_REPO ??
-      (typeof backend.repo === "string" ? backend.repo : undefined);
+      (typeof backend.repo === "string" ? backend.repo : undefined) ??
+      "ethanbaileyhomework/website-food-truck";
 
     if (!repo) {
       console.warn(
@@ -40,15 +41,11 @@ function applyRuntimeOverrides(config: ConfigData) {
       backend.repo = repo;
     }
 
-    const baseUrl = process.env.DECAP_OAUTH_BASE_URL;
-    if (baseUrl) {
-      backend.base_url = baseUrl;
-    }
+    const baseUrl = process.env.DECAP_OAUTH_BASE_URL ?? "/api/oauth";
+    backend.base_url = baseUrl;
 
-    const authEndpoint = process.env.DECAP_OAUTH_ENDPOINT;
-    if (authEndpoint) {
-      backend.auth_endpoint = authEndpoint;
-    }
+    const authEndpoint = process.env.DECAP_OAUTH_ENDPOINT ?? "auth";
+    backend.auth_endpoint = authEndpoint;
 
     const appId = process.env.DECAP_GITHUB_APP_ID;
     if (appId) {
