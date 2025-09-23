@@ -4,6 +4,8 @@ import { LogoGrid } from "@/components/shared/logo-grid";
 import { MarkdownRenderer } from "@/components/shared/markdown-renderer";
 import { getPartners, getSponsorsContent } from "@/lib/content";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(): Promise<Metadata> {
   const sponsors = await getSponsorsContent();
   return {

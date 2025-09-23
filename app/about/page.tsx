@@ -12,6 +12,8 @@ import {
 } from "@/lib/content";
 import { formatFullDate } from "@/lib/utils";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(): Promise<Metadata> {
   const about = await getAboutContent();
   return {

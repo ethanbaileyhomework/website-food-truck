@@ -1,9 +1,6 @@
-import fs from "fs/promises";
-import path from "path";
-import matter from "gray-matter";
-import YAML from "yaml";
 import { cache } from "react";
 
+import rawContent from "@/generated/content.json";
 import type {
   AboutContent,
   DonateContent,
@@ -18,151 +15,137 @@ import type {
   VolunteerContent,
 } from "@/lib/types";
 
-const CONTENT_DIR = path.join(process.cwd(), "content");
+type MarkdownEntry = {
+  slug: string;
+  data: Record<string, unknown>;
+  content: string;
+};
 
-async function readFileSafe(filePath: string) {
-  try {
-    return await fs.readFile(filePath, "utf8");
-  } catch (error) {
-    console.error(`Failed to read content file: ${filePath}`, error);
-    throw error;
+type LegalEntries = Record<"privacy" | "terms", MarkdownEntry>;
+
+type GeneratedContent = {
+  siteSettings: SiteSettings;
+  home: HomeContent;
+  statsSettings: StatsSettings;
+  about: AboutContent;
+  donate: DonateContent;
+  volunteer: VolunteerContent;
+  sponsors: SponsorsContent;
+  legal: LegalEntries;
+  team: MarkdownEntry[];
+  stories: MarkdownEntry[];
+  partners: MarkdownEntry[];
+};
+
+const content = rawContent as GeneratedContent;
+
+function parseOrder(value: unknown) {
+  if (typeof value === "number") {
+    return value;
   }
-}
 
-const readYamlFile = cache(async <T>(fileName: string): Promise<T> => {
-  const filePath = path.join(CONTENT_DIR, fileName);
-  const file = await readFileSafe(filePath);
-  return YAML.parse(file) as T;
-});
+  if (typeof value === "string") {
+    const parsed = Number.parseInt(value, 10);
+    return Number.isFinite(parsed) ? parsed : undefined;
+  }
 
-const readMarkdownFile = cache(async (fileName: string) => {
-  const filePath = path.join(CONTENT_DIR, fileName);
-  const file = await readFileSafe(filePath);
-  return matter(file);
-});
-
-async function readMarkdownCollection<T extends { slug: string }>(
-  folder: string,
-  mapItem: (data: Record<string, unknown>, body: string, slug: string) => T
-) {
-  const dirPath = path.join(CONTENT_DIR, folder);
-  const files = await fs.readdir(dirPath);
-
-  const entries = await Promise.all(
-    files
-      .filter((file) => file.endsWith(".md") || file.endsWith(".mdx"))
-      .map(async (fileName) => {
-        const slug = fileName.replace(/\.(md|mdx)$/i, "");
-        const filePath = path.join(dirPath, fileName);
-        const file = await readFileSafe(filePath);
-        const { data, content } = matter(file);
-        return mapItem(data, content.trim(), slug);
-      })
-  );
-
-  return entries;
+  return undefined;
 }
 
 export const getSiteSettings = cache(async (): Promise<SiteSettings> => {
-  return readYamlFile<SiteSettings>("site-settings.yaml");
+  return content.siteSettings;
 });
 
 export const getHomeContent = cache(async (): Promise<HomeContent> => {
-  return readYamlFile<HomeContent>("home.yaml");
+  return content.home;
 });
 
 export const getStatsSettings = cache(async (): Promise<StatsSettings> => {
-  return readYamlFile<StatsSettings>("stats-settings.yaml");
+  return content.statsSettings;
 });
 
 export const getAboutContent = cache(async (): Promise<AboutContent> => {
-  return readYamlFile<AboutContent>("about.yaml");
+  return content.about;
 });
 
 export const getDonateContent = cache(async (): Promise<DonateContent> => {
-  return readYamlFile<DonateContent>("donate.yaml");
+  return content.donate;
 });
 
 export const getVolunteerContent = cache(async (): Promise<VolunteerContent> => {
-  return readYamlFile<VolunteerContent>("volunteer.yaml");
+  return content.volunteer;
 });
 
 export const getSponsorsContent = cache(async (): Promise<SponsorsContent> => {
-  return readYamlFile<SponsorsContent>("sponsors.yaml");
+  return content.sponsors;
 });
 
 export const getTeamMembers = cache(async (): Promise<TeamMember[]> => {
-  const team = await readMarkdownCollection("team", (data, body, slug) => {
-    const record = data as Record<string, unknown>;
-    const orderRaw = record.order;
-    const orderValue =
-      typeof orderRaw === "number"
-        ? orderRaw
-        : typeof orderRaw === "string"
-          ? Number.parseInt(orderRaw, 10)
-          : undefined;
+  const members = content.team ?? [];
 
-    return {
-      name: typeof record.name === "string" ? record.name : "Unnamed",
-      role: typeof record.role === "string" ? record.role : undefined,
-      email: typeof record.email === "string" ? record.email : undefined,
-      headshot: typeof record.headshot === "string" ? record.headshot : undefined,
-      order: Number.isFinite(orderValue) ? orderValue : undefined,
-      body,
-      slug,
-    } satisfies TeamMember;
-  });
+  return members
+    .map(({ data, content: body, slug }) => {
+      const order = parseOrder(data.order);
 
-  return team.sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+      return {
+        name: typeof data.name === "string" ? data.name : "Unnamed",
+        role: typeof data.role === "string" ? data.role : undefined,
+        email: typeof data.email === "string" ? data.email : undefined,
+        headshot: typeof data.headshot === "string" ? data.headshot : undefined,
+        order: Number.isFinite(order) ? order : undefined,
+        body,
+        slug,
+      } satisfies TeamMember;
+    })
+    .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 });
 
 export const getStories = cache(async (): Promise<Story[]> => {
-  const stories = await readMarkdownCollection("stories", (data, body, slug) => {
-    const record = data as Record<string, unknown>;
-    return {
-      title: typeof record.title === "string" ? record.title : slug,
-      date: typeof record.date === "string" ? record.date : "",
-      coverImage: typeof record.coverImage === "string" ? record.coverImage : undefined,
-      body,
-      slug,
-    } satisfies Story;
-  });
+  const stories = content.stories ?? [];
 
-  return stories.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  return stories
+    .map(({ data, content: body, slug }) => {
+      const date = typeof data.date === "string" ? data.date : "";
+      return {
+        title: typeof data.title === "string" ? data.title : slug,
+        date,
+        coverImage: typeof data.coverImage === "string" ? data.coverImage : undefined,
+        body,
+        slug,
+      } satisfies Story;
+    })
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 });
 
 export const getPartners = cache(async (): Promise<Partner[]> => {
-  const partners = await readMarkdownCollection("partners", (data, body, slug) => {
-    const record = data as Record<string, unknown>;
-    const orderRaw = record.order;
-    const orderValue =
-      typeof orderRaw === "number"
-        ? orderRaw
-        : typeof orderRaw === "string"
-          ? Number.parseInt(orderRaw, 10)
-          : undefined;
+  const partners = content.partners ?? [];
 
-    return {
-      name: typeof record.name === "string" ? record.name : slug,
-      link: typeof record.link === "string" ? record.link : undefined,
-      logo: typeof record.logo === "string" ? record.logo : undefined,
-      blurb: typeof record.blurb === "string" && record.blurb.length > 0 ? record.blurb : body,
-      category: typeof record.category === "string" ? record.category : undefined,
-      order: Number.isFinite(orderValue) ? orderValue : undefined,
-      slug,
-    } satisfies Partner;
-  });
+  return partners
+    .map(({ data, content: body, slug }) => {
+      const order = parseOrder(data.order);
+      const blurb =
+        typeof data.blurb === "string" && data.blurb.length > 0 ? data.blurb : body;
 
-  return partners.sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
+      return {
+        name: typeof data.name === "string" ? data.name : slug,
+        link: typeof data.link === "string" ? data.link : undefined,
+        logo: typeof data.logo === "string" ? data.logo : undefined,
+        blurb,
+        category: typeof data.category === "string" ? data.category : undefined,
+        order: Number.isFinite(order) ? order : undefined,
+        slug,
+      } satisfies Partner;
+    })
+    .sort((a, b) => (a.order ?? 99) - (b.order ?? 99));
 });
 
 export const getLegalPage = cache(async (slug: "privacy" | "terms"): Promise<LegalPageContent> => {
-  const { data, content } = await readMarkdownFile(path.join("legal", `${slug}.md`));
-  const record = data as Record<string, unknown>;
+  const entry = content.legal[slug];
+  const record = entry?.data ?? {};
 
   return {
     title: typeof record.title === "string" ? record.title : slug,
     description: typeof record.description === "string" ? record.description : undefined,
-    body: content.trim(),
+    body: entry?.content ?? "",
   } satisfies LegalPageContent;
 });

@@ -4,6 +4,8 @@ import { KPIBar } from "@/components/stats/kpi-bar";
 import { LookerEmbed } from "@/components/stats/looker-embed";
 import { getSiteSettings, getStatsSettings } from "@/lib/content";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(): Promise<Metadata> {
   const stats = await getStatsSettings();
   return {
