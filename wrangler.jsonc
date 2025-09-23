@@ -3,7 +3,7 @@
   "name": "cranbournefoodtruck",
   "main": ".open-next/worker.js",
   "build": {
-    "command": "npm run cf:build -- --skipBuild"
+    "command": "npm run cf:build"
   },
   "compatibility_date": "2024-12-30",
   "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
