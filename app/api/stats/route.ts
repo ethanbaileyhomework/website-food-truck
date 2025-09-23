@@ -1,7 +1,8 @@
 import { NextResponse } from "next/server";
 import { parse } from "csv-parse/sync";
+import YAML from "yaml";
 
-import { getStatsSettings } from "@/lib/content";
+import statsSettingsSource from "@/content/stats-settings.yaml";
 import type { StatsApiResponse, StatsSettings } from "@/lib/types";
 
 const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
@@ -27,8 +28,10 @@ function buildFallback(stats: StatsSettings): StatsApiResponse {
   };
 }
 
+const statsSettings: StatsSettings = YAML.parse(statsSettingsSource);
+
 export async function GET() {
-  const stats = await getStatsSettings();
+  const stats = statsSettings;
   const cached = globalForStats.__statsCache;
   const now = Date.now();
 

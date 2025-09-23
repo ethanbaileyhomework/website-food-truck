@@ -3,7 +3,6 @@ import YAML from "yaml";
 
 import configTemplate from "@/admin/config.yml";
 
-export const runtime = "edge";
 export const dynamic = "force-dynamic";
 
 type ConfigData = Record<string, unknown>;

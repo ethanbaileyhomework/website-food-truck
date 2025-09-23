@@ -98,6 +98,14 @@ The `/api/stats` route polls this CSV, caches responses for 10 minutes and power
 4. Enable Netlify Identity + Git Gateway for Decap CMS login.
 5. Configure the custom domain `cranbournefoodtruck.com` in Netlify’s Domain settings and update DNS with your registrar.
 
+## Deployment on Cloudflare Pages
+
+1. Add the repository to Cloudflare Pages and choose the **Pages** framework preset.
+2. Set the build command to `npm run cf:build` so OpenNext adapts the project for Cloudflare Workers.
+3. Use `.open-next` as the output directory.
+4. Ensure the project uses the provided `wrangler.jsonc` configuration (automatically picked up by OpenNext) and keep the `nodejs_compat` flag enabled.
+5. Configure your production domain in Cloudflare Pages once the build succeeds.
+
 ## Additional notes
 
 - All imagery and partner logos are placeholders – replace via the CMS or by updating the files in `public/images`.

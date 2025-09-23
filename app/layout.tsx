@@ -8,6 +8,8 @@ import { Header } from "@/components/layout/header";
 import { StructuredData } from "@/components/layout/structured-data";
 import { getSiteSettings } from "@/lib/content";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await getSiteSettings();
   const description = settings.seo?.defaultDescription ?? settings.siteTagline;
