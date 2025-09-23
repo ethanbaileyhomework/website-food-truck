@@ -7,14 +7,28 @@ import type { StatsApiResponse, StatsSettings } from "@/lib/types";
 
 const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
 const CSV_REQUEST_TIMEOUT = 8 * 1000; // 8 seconds
+const LIVE_RESPONSE_MAX_AGE_SECONDS = 60; // 1 minute
+const FALLBACK_RESPONSE_MAX_AGE_SECONDS = 120; // 2 minutes
+
+type StatsSource = "live" | "fallback";
 
 type CacheEntry = {
   timestamp: number;
   data: StatsApiResponse;
+  source: StatsSource;
 };
+
+type SkipReason = "disabled" | "invalid-url" | "missing-csv-url" | "placeholder-url";
+
+type SkipDecision =
+  | { shouldSkip: true; reason: SkipReason; url?: string }
+  | { shouldSkip: false; url: string; from: "config" | "env" };
+
+type UnknownRecord = Record<string, unknown>;
 
 const globalForStats = globalThis as typeof globalThis & {
   __statsCache?: CacheEntry;
+  __statsLoggedReasons?: Partial<Record<SkipReason, true>>;
 };
 
 function parseNumber(value: unknown) {
@@ -30,6 +44,178 @@ function buildFallback(stats: StatsSettings): StatsApiResponse {
 }
 
 const statsSettings: StatsSettings = YAML.parse(statsSettingsSource);
+const disableRemoteFetch = parseBoolean(process.env.STATS_DISABLE_FETCH);
+
+function parseBoolean(value: string | undefined) {
+  return typeof value === "string" && /^(1|true|yes|on)$/i.test(value.trim());
+}
+
+function resolveCsvUrl(stats: StatsSettings): SkipDecision {
+  if (disableRemoteFetch) {
+    return { shouldSkip: true, reason: "disabled" };
+  }
+
+  const envUrl = process.env.STATS_CSV_URL?.trim();
+  if (envUrl) {
+    return validateCsvUrl(envUrl, "env");
+  }
+
+  const configUrl = stats.sheet.csvUrl?.trim();
+  if (!configUrl) {
+    return { shouldSkip: true, reason: "missing-csv-url" };
+  }
+
+  if (configUrl.includes("placeholder")) {
+    return { shouldSkip: true, reason: "placeholder-url" };
+  }
+
+  return validateCsvUrl(configUrl, "config");
+}
+
+function validateCsvUrl(url: string, from: "config" | "env"): SkipDecision {
+  try {
+    const parsed = new URL(url);
+
+    if (!(["http:", "https:"].includes(parsed.protocol))) {
+      return { shouldSkip: true, reason: "invalid-url", url };
+    }
+
+    return { shouldSkip: false, url: parsed.toString(), from };
+  } catch {
+    return { shouldSkip: true, reason: "invalid-url", url };
+  }
+}
+
+function rememberSkip(reason: SkipReason, details?: { url?: string }) {
+  if (!globalForStats.__statsLoggedReasons) {
+    globalForStats.__statsLoggedReasons = {};
+  }
+
+  if (globalForStats.__statsLoggedReasons[reason]) {
+    return;
+  }
+
+  globalForStats.__statsLoggedReasons[reason] = true;
+
+  switch (reason) {
+    case "disabled":
+      console.info("Stats CSV fetching disabled via STATS_DISABLE_FETCH. Serving fallback data.");
+      break;
+    case "missing-csv-url":
+      console.warn("Stats CSV URL is not configured. Serving fallback data.");
+      break;
+    case "placeholder-url":
+      console.info(
+        "Stats CSV URL is set to the placeholder value. Serving fallback data until a real sheet URL is configured."
+      );
+      break;
+    case "invalid-url":
+      if (details?.url) {
+        console.warn(
+          `Stats CSV URL "${details.url}" is invalid or unsupported. Serving fallback data.`
+        );
+      } else {
+        console.warn("Stats CSV URL is invalid. Serving fallback data.");
+      }
+      break;
+  }
+}
+
+function respondWith(data: StatsApiResponse, source: StatsSource) {
+  const maxAge =
+    source === "live" ? LIVE_RESPONSE_MAX_AGE_SECONDS : FALLBACK_RESPONSE_MAX_AGE_SECONDS;
+
+  return NextResponse.json(data, {
+    headers: {
+      "cache-control": `public, max-age=${maxAge}`,
+      "x-stats-source": source,
+    },
+  });
+}
+
+function isTimeoutError(error: unknown): error is Error {
+  return error instanceof Error && error.name === "TimeoutError";
+}
+
+function isAbortError(error: unknown): error is Error {
+  return error instanceof Error && (error.name === "AbortError" || /aborted/i.test(error.message));
+}
+
+function getErrorCode(value: unknown): string | undefined {
+  if (typeof value !== "object" || value === null) {
+    return undefined;
+  }
+
+  const record = value as UnknownRecord;
+
+  const directCode = record.code;
+  if (typeof directCode === "string" && directCode) {
+    return directCode;
+  }
+
+  if (record.cause) {
+    const causeCode = getErrorCode(record.cause);
+    if (causeCode) {
+      return causeCode;
+    }
+  }
+
+  const aggregateErrors = record.errors;
+  if (Array.isArray(aggregateErrors)) {
+    for (const nested of aggregateErrors) {
+      const nestedCode = getErrorCode(nested);
+      if (nestedCode) {
+        return nestedCode;
+      }
+    }
+  }
+
+  return undefined;
+}
+
+function isNetworkError(error: unknown): error is Error {
+  if (!(error instanceof Error)) {
+    return false;
+  }
+
+  if (error.name === "TypeError" && /fetch failed/i.test(error.message)) {
+    return true;
+  }
+
+  const code = getErrorCode(error);
+  if (!code) {
+    return false;
+  }
+
+  return /^E[A-Z0-9_]+/.test(code) || code.startsWith("ERR_") || code.startsWith("UND_ERR");
+}
+
+function logStatsFetchError(error: unknown) {
+  if (isTimeoutError(error)) {
+    console.warn(
+      `Stats API request timed out after ${CSV_REQUEST_TIMEOUT}ms. Serving fallback data.`
+    );
+    return;
+  }
+
+  if (isAbortError(error)) {
+    console.warn("Stats API request was aborted. Serving fallback data.");
+    return;
+  }
+
+  if (isNetworkError(error)) {
+    const code = getErrorCode(error);
+    const detail = code ? `${code}: ${error.message}` : error.message;
+    console.warn(`Stats API network error (${detail}). Serving fallback data.`);
+    return;
+  }
+
+  if (error instanceof Error) {
+    console.error("Stats API error", error);
+  } else {
+    console.error("Stats API unknown error", error);
+  }
+}
 
 export async function GET() {
   const stats = statsSettings;
@@ -37,21 +223,20 @@ export async function GET() {
   const now = Date.now();
 
   if (cached && now - cached.timestamp < CACHE_DURATION) {
-    return NextResponse.json(cached.data, {
-      headers: {
-        "cache-control": "public, max-age=60",
-      },
-    });
+    return respondWith(cached.data, cached.source);
   }
 
-  if (!stats.sheet.csvUrl) {
+  const decision = resolveCsvUrl(stats);
+
+  if (decision.shouldSkip) {
     const fallback = buildFallback(stats);
-    globalForStats.__statsCache = { timestamp: now, data: fallback };
-    return NextResponse.json(fallback);
+    globalForStats.__statsCache = { timestamp: now, data: fallback, source: "fallback" };
+    rememberSkip(decision.reason, { url: decision.url });
+    return respondWith(fallback, "fallback");
   }
 
   try {
-    const response = await fetchWithTimeout(stats.sheet.csvUrl, {
+    const response = await fetchWithTimeout(decision.url, {
       next: { revalidate: CACHE_DURATION / 1000 },
     });
 
@@ -125,28 +310,15 @@ export async function GET() {
     globalForStats.__statsCache = {
       timestamp: now,
       data: payload,
+      source: "live",
     };
 
-    return NextResponse.json(payload, {
-      headers: {
-        "cache-control": "public, max-age=60",
-      },
-    });
+    return respondWith(payload, "live");
   } catch (error) {
-    if (error instanceof Error && error.name === "TimeoutError") {
-      console.error("Stats API request timed out", error);
-    } else if (error instanceof Error && error.name === "AbortError") {
-      console.error("Stats API request aborted", error);
-    } else {
-      console.error("Stats API error", error);
-    }
+    logStatsFetchError(error);
     const fallback = buildFallback(stats);
-    globalForStats.__statsCache = { timestamp: now, data: fallback };
-    return NextResponse.json(fallback, {
-      headers: {
-        "cache-control": "public, max-age=120",
-      },
-    });
+    globalForStats.__statsCache = { timestamp: now, data: fallback, source: "fallback" };
+    return respondWith(fallback, "fallback");
   }
 }
 
