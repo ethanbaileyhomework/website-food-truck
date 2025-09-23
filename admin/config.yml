@@ -1,7 +1,7 @@
 backend:
   name: github
   branch: main
-  repo: cranbournefoodtruck/website-food-truck
+  repo: ethanbaileyhomework/website-food-truck
 
 local_backend: true
 
