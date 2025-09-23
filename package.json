@@ -3,11 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "generate:content": "node scripts/generate-content.mjs",
+    "predev": "npm run generate:content",
     "dev": "next dev",
+    "prebuild": "npm run generate:content",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "precf:build": "npm run generate:content",
     "cf:build": "opennextjs-cloudflare build",
+    "precf:dev": "npm run generate:content",
     "cf:dev": "wrangler dev"
   },
   "dependencies": {

@@ -1,0 +1,447 @@
+{
+  "siteSettings": {
+    "siteName": "Cranbourne Food Truck",
+    "siteTagline": "Nourishing community with dignity and care.",
+    "logo": "",
+    "primaryColor": "#C3423F",
+    "navigation": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Stats",
+        "href": "/stats"
+      },
+      {
+        "label": "Donate",
+        "href": "/donate",
+        "variant": "button"
+      },
+      {
+        "label": "Volunteer",
+        "href": "/volunteer"
+      },
+      {
+        "label": "About Us",
+        "href": "/about"
+      },
+      {
+        "label": "Sponsors & Partners",
+        "href": "/sponsors"
+      }
+    ],
+    "contact": {
+      "email": "hello@cranbournefoodtruck.com",
+      "phone": "(03) 9000 0000",
+      "address": "Cranbourne Community Hub, 65-95 Berwick-Cranbourne Rd, Cranbourne VIC",
+      "abn": "ABN 00 000 000 000"
+    },
+    "socials": {
+      "facebook": "https://facebook.com/cranbournefoodtruck",
+      "instagram": "https://instagram.com/cranbournefoodtruck",
+      "youtube": "https://youtube.com/@cranbournefoodtruck",
+      "linkedin": "https://linkedin.com/company/cranbourne-food-truck",
+      "tiktok": "",
+      "twitter": ""
+    },
+    "bank": {
+      "accountName": "Cranbourne Food Truck Inc.",
+      "bsb": "000-000",
+      "accountNumber": "00000000",
+      "reference": "YourName-Donation"
+    },
+    "donate": {
+      "paypal": "https://www.paypal.com/donate",
+      "stripe": "https://buy.stripe.com/test_1234567890",
+      "note": "Donations of $2 or more are tax deductible. Receipts issued within 5 business days."
+    },
+    "donationCopy": {
+      "bankSection": {
+        "eyebrow": "Direct deposit",
+        "title": "Bank transfer details",
+        "fieldLabels": {
+          "accountName": "Account name",
+          "bsb": "BSB",
+          "accountNumber": "Account number",
+          "reference": "Reference"
+        }
+      },
+      "onlineSection": {
+        "eyebrow": "Give online",
+        "title": "Secure donate links",
+        "paypalLabel": "Donate via PayPal",
+        "stripeLabel": "Donate via Stripe"
+      }
+    },
+    "map": {
+      "embedUrl": "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3151.8354345098575!2d144.9556513153166!3d-37.817327979751795!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzfCsDQ5JzAyLjQiUyAxNDTCsDU3JzI2LjAiRQ!5e0!3m2!1sen!2sau!4v1613960648896!5m2!1sen!2sau",
+      "directionsUrl": "https://maps.google.com/?q=Cranbourne+Community+Hub"
+    },
+    "service": {
+      "title": "Weekly community dinners",
+      "days": "Tuesdays & Thursdays",
+      "time": "6:00pm – 8:00pm",
+      "location": "Cranbourne Community Hub courtyard",
+      "description": "Hot meals, fresh groceries, warm conversations and practical care. Everyone is welcome.",
+      "phone": "(03) 9000 0000",
+      "email": "care@cranbournefoodtruck.com",
+      "notes": [
+        "No ID required – just come as you are.",
+        "Family friendly space with play corner.",
+        "Bring your own containers if you can."
+      ],
+      "ctaLabel": "View directions",
+      "labels": {
+        "heroEyebrow": "This week’s service",
+        "sectionEyebrow": "Service details",
+        "notesTitle": "What to expect",
+        "callCta": "Call us",
+        "emailCta": "Email the team",
+        "mapTitle": "Service location map"
+      }
+    },
+    "lookers": {
+      "statsUrl": "https://lookerstudio.google.com/reporting/placeholder",
+      "embedTitle": "Cranbourne Food Truck Service Trends"
+    },
+    "tallyFormUrl": "https://tally.so/r/placeholder",
+    "volunteerForm": {
+      "placeholderTitle": "Volunteer form coming soon",
+      "placeholderBody": "Add your Tally.so form URL in the CMS to display it here.",
+      "iframeTitle": "Volunteer expression of interest form"
+    },
+    "footer": {
+      "contactHeading": "Stay connected",
+      "contactBody": "We’re here to serve our Cranbourne neighbours with warmth and dignity.",
+      "socialHeading": "Follow our journey",
+      "bottomNote": "Built with care for the Cranbourne community.",
+      "links": [
+        {
+          "label": "Privacy",
+          "href": "/privacy"
+        },
+        {
+          "label": "Terms",
+          "href": "/terms"
+        }
+      ]
+    },
+    "analytics": {
+      "gaMeasurementId": ""
+    },
+    "seo": {
+      "defaultDescription": "Cranbourne Food Truck serves free, nutritious meals and wraparound support for our neighbours each week.",
+      "ogImage": "/images/og-default.svg"
+    }
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Serving Cranbourne with heart",
+      "headline": "A welcoming meal for anyone who needs it",
+      "subheadline": "Our volunteer-powered food truck offers hot dinners, pantry staples and friendly faces every Tuesday and Thursday night.",
+      "image": "/images/hero-gathering.svg",
+      "imageAlt": "Community members gathered at the Cranbourne Food Truck",
+      "ctas": {
+        "primary": {
+          "label": "Need a meal? Find us",
+          "href": "#service-details"
+        },
+        "secondary": {
+          "label": "Volunteer with us",
+          "href": "/volunteer"
+        }
+      }
+    },
+    "whatWeDo": {
+      "title": "What we do",
+      "description": "More than a meal – our team provides nourishment, connection and wraparound care for neighbours doing it tough.",
+      "cards": [
+        {
+          "title": "Hot, hearty meals",
+          "description": "Chef-prepared dinners, dessert and hot drinks served with dignity.",
+          "icon": "bowl"
+        },
+        {
+          "title": "Groceries to go",
+          "description": "Fresh produce, pantry staples and toiletries to take home.",
+          "icon": "basket"
+        },
+        {
+          "title": "Care & connection",
+          "description": "Support workers and volunteers ready to listen and link you in.",
+          "icon": "hands"
+        }
+      ]
+    },
+    "impact": {
+      "title": "Community impact",
+      "description": "Live service data updates every few minutes from our Google Sheet."
+    },
+    "carousel": {
+      "title": "Voices from the truck",
+      "items": [
+        {
+          "quote": "It’s not just dinner – it’s where I feel seen and supported.",
+          "name": "Leah",
+          "role": "Guest",
+          "image": "/images/testimonial-1.svg"
+        },
+        {
+          "quote": "Volunteering here reminds me that small acts of kindness matter.",
+          "name": "Jason",
+          "role": "Volunteer",
+          "image": "/images/testimonial-2.svg"
+        },
+        {
+          "quote": "My kids look forward to the truck nights – the team treats us like family.",
+          "name": "Maree",
+          "role": "Parent",
+          "image": "/images/testimonial-3.svg"
+        }
+      ]
+    },
+    "seo": {
+      "title": "Home",
+      "description": "Discover how Cranbourne Food Truck serves free meals, groceries and care to our community each week."
+    }
+  },
+  "statsSettings": {
+    "sheet": {
+      "csvUrl": "https://docs.google.com/spreadsheets/d/e/placeholder/pub?gid=0&single=true&output=csv",
+      "fieldMapping": {
+        "date": "date",
+        "meals": "meals",
+        "guests": "guests",
+        "volunteers": "volunteers",
+        "groceries": "groceries",
+        "notes": "notes"
+      },
+      "serviceDateFormat": "yyyy-MM-dd"
+    },
+    "fallbackTotals": {
+      "meals": 12450,
+      "guests": 7850,
+      "volunteers": 4200,
+      "groceries": 5600,
+      "services": 320
+    },
+    "fallbackLatestService": {
+      "date": "2024-08-15",
+      "meals": 185,
+      "guests": 132,
+      "volunteers": 28,
+      "groceries": 95,
+      "notes": "Pop-up haircuts and health clinic onsite."
+    },
+    "page": {
+      "heading": "Service stats",
+      "intro": "Live counts of meals, guests and volunteers powered by our Google Sheet. Explore deeper trends via the interactive dashboard below."
+    },
+    "latestSection": {
+      "eyebrow": "Latest service",
+      "srLabel": "Most recent service",
+      "streamingMessage": "Streaming directly from our Google Sheet",
+      "fallbackMessage": "Showing fallback numbers from CMS",
+      "metrics": {
+        "meals": "Meals served",
+        "guests": "Guests welcomed",
+        "volunteers": "Volunteers rostered",
+        "groceries": "Grocery packs"
+      }
+    },
+    "totalsSection": {
+      "metrics": {
+        "meals": "Total meals",
+        "guests": "Guests welcomed",
+        "volunteers": "Volunteers",
+        "services": "Services"
+      }
+    },
+    "dashboardSection": {
+      "title": "Interactive dashboard",
+      "description": "Explore the full service trends dashboard below."
+    },
+    "lookers": {
+      "statsUrl": "https://lookerstudio.google.com/reporting/placeholder",
+      "embedTitle": "Service trends dashboard"
+    },
+    "seo": {
+      "title": "Stats",
+      "description": "Live service numbers and dashboards from Cranbourne Food Truck."
+    }
+  },
+  "about": {
+    "story": {
+      "title": "Our story",
+      "body": "Cranbourne Food Truck began in 2016 with one borrowed van and a handful of neighbours who believed no one in our suburb should eat dinner alone. Since then, we’ve cooked tens of thousands of meals and grown into a mobile hub for connection, health and dignity.\n"
+    },
+    "missionVision": {
+      "title": "Mission & vision",
+      "mission": "We serve nourishing food and wraparound care so that everyone in Cranbourne feels seen, supported and valued.",
+      "vision": "A connected community where neighbours look out for one another and everyone has what they need to thrive."
+    },
+    "impact": {
+      "title": "Impact pillars",
+      "points": [
+        {
+          "title": "Hospitality",
+          "description": "Creating warm, safe spaces with comforting meals served by friendly faces."
+        },
+        {
+          "title": "Dignity",
+          "description": "Choice-driven support, free from judgement, celebrating each person’s strengths."
+        },
+        {
+          "title": "Collaboration",
+          "description": "Working with local agencies, schools and churches to coordinate care."
+        }
+      ]
+    },
+    "partnerships": {
+      "title": "How we partner",
+      "description": "We collaborate with schools, businesses, service clubs and health providers to expand what we can offer guests."
+    },
+    "futurePlans": {
+      "title": "What’s next",
+      "body": "We are working toward expanding service nights, adding a mobile pantry van and launching a hospitality training pathway for young people.\n"
+    },
+    "seo": {
+      "title": "About us",
+      "description": "Meet the team, mission and story behind Cranbourne Food Truck."
+    }
+  },
+  "donate": {
+    "introTitle": "Why your donation matters",
+    "introBody": "Every plate we serve is made possible by generous supporters. Donations fund fresh produce, pantry staples, volunteer training and the fuel that keeps our truck rolling.\n",
+    "seo": {
+      "title": "Donate",
+      "description": "Support Cranbourne Food Truck with a tax-deductible donation or secure online gift."
+    }
+  },
+  "volunteer": {
+    "introTitle": "Join the crew",
+    "introBody": "We’re a crew of neighbours, chefs, drivers and friendly faces who believe everyone deserves a warm meal and a warm welcome. Share your details and we’ll be in touch about upcoming volunteer opportunities.\n",
+    "seo": {
+      "title": "Volunteer",
+      "description": "Register your interest to volunteer with Cranbourne Food Truck."
+    }
+  },
+  "sponsors": {
+    "introTitle": "Sponsors & partners",
+    "introBody": "We’re grateful for the businesses, councils, schools and service clubs who invest time, funding and expertise so Cranbourne families can access nourishing support.\n",
+    "seo": {
+      "title": "Sponsors & Partners",
+      "description": "Meet the community sponsors and partners who power Cranbourne Food Truck."
+    }
+  },
+  "legal": {
+    "privacy": {
+      "slug": "privacy",
+      "data": {
+        "title": "Privacy",
+        "description": "Privacy statement for Cranbourne Food Truck guests, supporters and volunteers."
+      },
+      "content": "## Privacy statement\n\nThis is a placeholder privacy statement. Update this page through the CMS with your organisation’s privacy policy, including how you collect, use and store personal information.\n\nFor questions please email [hello@cranbournefoodtruck.com](mailto:hello@cranbournefoodtruck.com)."
+    },
+    "terms": {
+      "slug": "terms",
+      "data": {
+        "title": "Terms",
+        "description": "Terms of use for Cranbourne Food Truck services and website."
+      },
+      "content": "## Terms of use\n\nThis is a placeholder terms of use page. Provide your service terms through the CMS, including participation expectations, disclaimers and any limitations of liability.\n\nContact us at [hello@cranbournefoodtruck.com](mailto:hello@cranbournefoodtruck.com) with any questions."
+    }
+  },
+  "team": [
+    {
+      "slug": "amira-patel",
+      "data": {
+        "name": "Amira Patel",
+        "role": "Community Navigator",
+        "headshot": "/images/team-amira.svg",
+        "order": 3
+      },
+      "content": "Amira connects guests with housing, health and employment services through trusted relationships."
+    },
+    {
+      "slug": "jane-doe",
+      "data": {
+        "name": "Jane Doe",
+        "role": "Program Director",
+        "email": "jane@cranbournefoodtruck.com",
+        "headshot": "/images/team-jane.svg",
+        "order": 1
+      },
+      "content": "Jane leads our volunteers and community partnerships, making sure every guest is welcomed with warmth."
+    },
+    {
+      "slug": "sam-lee",
+      "data": {
+        "name": "Sam Lee",
+        "role": "Head Chef",
+        "headshot": "/images/team-sam.svg",
+        "order": 2
+      },
+      "content": "Sam curates seasonal menus using donated produce and ensures every meal is both delicious and nourishing."
+    }
+  ],
+  "stories": [
+    {
+      "slug": "2016-first-service",
+      "data": {
+        "title": "Our very first service",
+        "date": "2016-04-12T00:00:00.000Z",
+        "coverImage": "/images/story-first-night.svg"
+      },
+      "content": "A handful of neighbours, a loaned van and 40 home-cooked meals – that first chilly night sparked a movement of generosity. We have been serving ever since."
+    },
+    {
+      "slug": "2024-community-highlights",
+      "data": {
+        "title": "2024 Community Highlights",
+        "date": "2024-08-01T00:00:00.000Z",
+        "coverImage": "/images/story-community.svg"
+      },
+      "content": "We expanded to two service nights this year, welcoming more than 7,000 guests and launching partnerships with local health providers for on-site clinics."
+    }
+  ],
+  "partners": [
+    {
+      "slug": "local-business",
+      "data": {
+        "name": "Brewed Awakenings Cafe",
+        "link": "https://example.com/",
+        "logo": "/images/partner-brewed.svg",
+        "blurb": "Donating barista-made coffee and training volunteers in hospitality.",
+        "category": "partner",
+        "order": 3
+      },
+      "content": ""
+    },
+    {
+      "slug": "local-college",
+      "data": {
+        "name": "Cranbourne Secondary College",
+        "link": "https://cranbournesc.vic.edu.au/",
+        "logo": "/images/partner-college.svg",
+        "blurb": "Students prep produce each week and help host family activity stations.",
+        "category": "partner",
+        "order": 2
+      },
+      "content": ""
+    },
+    {
+      "slug": "local-council",
+      "data": {
+        "name": "City of Casey",
+        "link": "https://www.casey.vic.gov.au/",
+        "logo": "/images/partner-casey.svg",
+        "blurb": "Funding our fresh produce purchases and providing kitchen facilities.",
+        "category": "sponsor",
+        "order": 1
+      },
+      "content": ""
+    }
+  ]
+}

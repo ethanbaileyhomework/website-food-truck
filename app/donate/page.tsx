@@ -4,6 +4,8 @@ import { DonateBox } from "@/components/donate/donate-box";
 import { MarkdownRenderer } from "@/components/shared/markdown-renderer";
 import { getDonateContent, getSiteSettings } from "@/lib/content";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(): Promise<Metadata> {
   const donate = await getDonateContent();
   return {

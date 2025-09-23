@@ -7,6 +7,8 @@ import { InfoCards } from "@/components/shared/info-cards";
 import { TestimonialCarousel } from "@/components/shared/testimonial-carousel";
 import { getHomeContent, getSiteSettings, getStatsSettings } from "@/lib/content";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(): Promise<Metadata> {
   const home = await getHomeContent();
   return {

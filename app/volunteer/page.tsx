@@ -4,6 +4,8 @@ import { TallyEmbed } from "@/components/volunteer/tally-embed";
 import { MarkdownRenderer } from "@/components/shared/markdown-renderer";
 import { getSiteSettings, getVolunteerContent } from "@/lib/content";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(): Promise<Metadata> {
   const volunteer = await getVolunteerContent();
   return {

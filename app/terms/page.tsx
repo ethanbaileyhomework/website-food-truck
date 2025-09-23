@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import { MarkdownRenderer } from "@/components/shared/markdown-renderer";
 import { getLegalPage } from "@/lib/content";
 
+export const dynamic = "force-static";
+
 export async function generateMetadata(): Promise<Metadata> {
   const page = await getLegalPage("terms");
   return {
