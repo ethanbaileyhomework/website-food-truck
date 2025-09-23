@@ -1,0 +1,17 @@
+name = "cranbournefoodtruck"
+main = ".open-next/worker.js"
+compatibility_date = "2024-12-30"
+compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
+
+[build]
+command = "npm run cf:build"
+
+[assets]
+binding = "ASSETS"
+directory = ".open-next/assets"
+
+[vars]
+DECAP_SITE_URL = "https://www.cranbournefoodtruck.com"
+DECAP_OAUTH_BASE_URL = "https://www.cranbournefoodtruck.com"
+DECAP_GITHUB_REPO = "ethanbaileyhomework/website-food-truck"
+GITHUB_CLIENT_ID = "Ov23litQwZdJZ3r7MJH0"
