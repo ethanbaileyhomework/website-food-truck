@@ -1,10 +1,18 @@
 import { NextResponse } from "next/server";
 
-import { getGitHubClientId } from "../env";
+import { getGitHubClientId, getOAuthBaseUrl } from "../env";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const redirectUri = `${url.origin}/api/oauth/callback`;
+  const baseOverride = getOAuthBaseUrl();
+  const redirectUri = (() => {
+    try {
+      const base = baseOverride ?? url.origin;
+      return new URL("/api/oauth/callback", base).toString().replace(/\/$/, "");
+    } catch {
+      return `${url.origin}/api/oauth/callback`;
+    }
+  })();
   const clientId = getGitHubClientId();
 
   if (!clientId) {
