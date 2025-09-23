@@ -1,14 +1,19 @@
 import { NextResponse } from "next/server";
 
+import { getGitHubClientId } from "../env";
+
 export async function GET(req: Request) {
   const url = new URL(req.url);
   const redirectUri = `${url.origin}/api/oauth/callback`;
-  const clientId = process.env.GITHUB_CLIENT_ID;
+  const clientId = getGitHubClientId();
 
   if (!clientId) {
-    return new NextResponse("GitHub OAuth client ID is not configured.", {
-      status: 500,
-    });
+    return new NextResponse(
+      "GitHub OAuth client ID is not configured. Set GITHUB_CLIENT_ID or DECAP_GITHUB_CLIENT_ID.",
+      {
+        status: 500,
+      }
+    );
   }
 
   const state = crypto.randomUUID();

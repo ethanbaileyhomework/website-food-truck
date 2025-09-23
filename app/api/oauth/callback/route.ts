@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+import { getGitHubClientId, getGitHubClientSecret } from "../env";
+
 type AccessTokenResponse = {
   access_token?: string;
   error?: string;
@@ -17,13 +19,16 @@ export async function GET(req: Request) {
     return new NextResponse("Invalid OAuth state", { status: 400 });
   }
 
-  const clientId = process.env.GITHUB_CLIENT_ID;
-  const clientSecret = process.env.GITHUB_CLIENT_SECRET;
+  const clientId = getGitHubClientId();
+  const clientSecret = getGitHubClientSecret();
 
   if (!clientId || !clientSecret) {
-    return new NextResponse("GitHub OAuth credentials are not configured.", {
-      status: 500,
-    });
+    return new NextResponse(
+      "GitHub OAuth credentials are not configured. Set GITHUB_CLIENT_ID/GITHUB_CLIENT_SECRET or their DECAP_ equivalents.",
+      {
+        status: 500,
+      }
+    );
   }
 
   const body = new URLSearchParams({
