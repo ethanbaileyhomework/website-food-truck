@@ -1,6 +1,9 @@
 backend:
-  name: git-gateway
+  name: github
   branch: main
+  repo: cranbournefoodtruck/website-food-truck
+
+local_backend: true
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
