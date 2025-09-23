@@ -2,7 +2,7 @@ backend:
   name: github
   branch: main
   repo: ethanbaileyhomework/website-food-truck
-  base_url: https://cranbournefoodtruck.com
+  base_url: https://www.cranbournefoodtruck.com
 
 local_backend: true
 
