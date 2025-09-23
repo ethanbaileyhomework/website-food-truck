@@ -6,8 +6,8 @@ A modern, community-focused website for Cranbourne Food Truck built with Next.js
 
 - [Next.js 14 (App Router)](https://nextjs.org/) with TypeScript
 - Tailwind CSS for styling
-- Decap CMS (Git-based, Netlify Identity ready) for content management
-- Netlify for hosting, deploy previews and optional form handling
+- Decap CMS (Git-based with GitHub authentication) for content management
+- Cloudflare Pages for hosting and deploy previews
 - Google Sheets CSV feed for live service statistics (`/api/stats`)
 - Looker Studio embeds for interactive dashboards
 - Tally.so volunteer expression of interest form embed
@@ -30,13 +30,21 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
 
 ## Content editing with Decap CMS
 
-1. Deploy the project to Netlify and enable **Identity** + **Git Gateway** for authentication.
-2. Visit `/admin` on the deployed site to access the CMS.
-3. Collections available:
+1. Deploy the project to Cloudflare Pages. The CMS is pre-configured for the GitHub backend so editors authenticate with their GitHub accounts.
+2. Provision a GitHub OAuth integration (either an OAuth App, GitHub App or the official Decap CMS OAuth provider) and expose it via a Cloudflare Worker or other HTTPS endpoint.
+3. In Cloudflare Pages → **Settings → Environment variables**, add the following values for both Production and Preview environments:
+   - `DECAP_GITHUB_REPO` – `owner/repo` slug for this site.
+   - `DECAP_BACKEND_BRANCH` – optional override if your default branch is not `main`.
+   - `DECAP_GITHUB_APP_ID` – client/app ID from your GitHub OAuth integration (optional but recommended when using GitHub Apps).
+   - `DECAP_OAUTH_BASE_URL` – origin for your OAuth provider (for example `https://cms-auth.example.com`).
+   - `DECAP_OAUTH_ENDPOINT` – endpoint path served by the provider (for example `/api/auth`).
+   - `DECAP_SITE_URL` / `DECAP_DISPLAY_URL` – optional values to control site and preview URLs displayed inside the CMS UI.
+4. Visit `/admin` on the deployed site to access the CMS once authentication is configured.
+5. Collections available:
    - **Site Settings** – global contact details, donation links, map embed, service info, social links and analytics.
    - **Home Page**, **Stats Settings**, **About Page**, **Donate Page**, **Volunteer Page**, **Sponsors Page** – single-file collections for main copy and metadata.
    - **Team**, **Stories**, **Partners** – folder collections for repeatable entries with images and optional ordering.
-4. Media uploads are stored in `public/uploads/` and referenced automatically.
+6. Media uploads are stored in `public/uploads/` and referenced automatically.
 
 The CMS can also run locally with `npx decap-server` and navigating to `http://localhost:3000/admin`.
 
@@ -79,7 +87,7 @@ The `/api/stats` route polls this CSV, caches responses for 10 minutes and power
 
 - Create a Tally.so form and copy the share URL.
 - Paste the link into **Site Settings → Tally Form URL** to display the embedded form on `/volunteer`.
-- A hidden Netlify form named `volunteer-fallback` is included as a backup if you later enable native Netlify Forms.
+- If you need an alternative submission channel, configure a Cloudflare Worker or third-party form tool and embed it here.
 
 ## Sponsors & team content
 
@@ -90,21 +98,14 @@ The `/api/stats` route polls this CSV, caches responses for 10 minutes and power
 
 - Add a Google Analytics 4 Measurement ID under **Site Settings → Analytics** to automatically load GA scripts. Leave blank to disable tracking.
 
-## Deployment on Netlify
-
-1. Connect the GitHub repository to Netlify.
-2. Set the build command to `npm run build` and publish directory to `.next`.
-3. Netlify automatically detects `netlify.toml` and applies the official Next.js plugin.
-4. Enable Netlify Identity + Git Gateway for Decap CMS login.
-5. Configure the custom domain `cranbournefoodtruck.com` in Netlify’s Domain settings and update DNS with your registrar.
-
 ## Deployment on Cloudflare Pages
 
 1. Add the repository to Cloudflare Pages and choose the **Pages** framework preset.
 2. Set the build command to `npm run cf:build` so OpenNext adapts the project for Cloudflare Workers.
 3. Use `.open-next` as the output directory.
 4. Ensure the project uses the provided `wrangler.jsonc` configuration (automatically picked up by OpenNext) and keep the `nodejs_compat` flag enabled.
-5. Configure your production domain in Cloudflare Pages once the build succeeds.
+5. Add the CMS environment variables described above so editors can authenticate.
+6. Configure your production domain in Cloudflare Pages once the build succeeds.
 
 ## Additional notes
 

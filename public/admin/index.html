@@ -50,7 +50,7 @@
     <script>
       window.CMS_MANUAL_INIT = true;
     </script>
-    <script src="https://unpkg.com/netlify-cms@^2.10.0/dist/netlify-cms.js"></script>
+    <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
     <script>
       (function () {
         function renderError(message) {
@@ -79,11 +79,11 @@
           try {
             var config = await loadConfig();
             if (!window.CMS || typeof window.CMS.init !== "function") {
-              throw new Error("Netlify CMS failed to initialise.");
+              throw new Error("Decap CMS failed to initialise.");
             }
             window.CMS.init({ config: config });
           } catch (error) {
-            console.error("Failed to initialise Netlify CMS", error);
+            console.error("Failed to initialise Decap CMS", error);
             renderError(error && error.message ? error.message : "Unexpected error.");
           }
         }

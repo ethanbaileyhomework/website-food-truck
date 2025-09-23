@@ -29,11 +29,6 @@ export function TallyEmbed({
           />
         </div>
       )}
-      <form name="volunteer-fallback" data-netlify="true" hidden>
-        <input type="text" name="name" />
-        <input type="email" name="email" />
-        <textarea name="message" />
-      </form>
     </>
   );
 }
