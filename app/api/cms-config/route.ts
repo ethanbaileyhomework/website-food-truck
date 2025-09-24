@@ -40,17 +40,23 @@ function ensureBackend(config: ConfigData) {
 const siteCollection = {
   name: "site",
   label: "Site Settings",
-  file: "public/content/site.json",
-  fields: [
-    { label: "Site Name", name: "siteName", widget: "string" },
-    { label: "Tagline", name: "tagline", widget: "string", required: false },
+  files: [
     {
-      label: "Primary Color",
-      name: "primaryColor",
-      widget: "string",
-      required: false,
+      label: "Site Settings",
+      name: "site",
+      file: "public/content/site.json",
+      fields: [
+        { label: "Site Name", name: "siteName", widget: "string" },
+        { label: "Tagline", name: "tagline", widget: "string", required: false },
+        {
+          label: "Primary Color",
+          name: "primaryColor",
+          widget: "string",
+          required: false,
+        },
+        { label: "Logo", name: "logo", widget: "image", required: false },
+      ],
     },
-    { label: "Logo", name: "logo", widget: "image", required: false },
   ],
 };
 
