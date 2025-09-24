@@ -17,3 +17,16 @@ export const getGitHubClientId = () =>
 
 export const getGitHubClientSecret = () =>
   pickEnv("GITHUB_CLIENT_SECRET", "DECAP_GITHUB_CLIENT_SECRET");
+
+export const getOAuthCallbackUrl = () =>
+  pickEnv(
+    "DECAP_OAUTH_CALLBACK_URL",
+    "DECAP_OAUTH_REDIRECT_URL",
+    "DECAP_OAUTH_REDIRECT_URI"
+  );
+
+export const getOAuthCallbackPath = () =>
+  pickEnv("DECAP_OAUTH_CALLBACK_PATH", "DECAP_OAUTH_REDIRECT_PATH");
+
+export const getSiteUrl = () =>
+  pickEnv("DECAP_SITE_URL", "SITE_URL", "NEXT_PUBLIC_SITE_URL");

@@ -1,10 +1,12 @@
 import { NextResponse } from "next/server";
 
+import { getOAuthCookieDomain, resolveCallbackUrl } from "../config";
 import { getGitHubClientId } from "../env";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
-  const redirectUri = `${url.origin}/api/oauth/callback`;
+  const callbackUrl = resolveCallbackUrl(url);
+  const redirectUri = callbackUrl.toString();
   const clientId = getGitHubClientId();
 
   if (!clientId) {
@@ -24,13 +26,27 @@ export async function GET(req: Request) {
   authorizeUrl.searchParams.set("state", state);
 
   const response = NextResponse.redirect(authorizeUrl.toString());
-  response.cookies.set("decap_oauth_state", state, {
+  const cookieDomain = getOAuthCookieDomain(url, callbackUrl);
+  const stateCookieOptions: {
+    httpOnly: true;
+    secure: true;
+    sameSite: "lax";
+    maxAge: number;
+    path: string;
+    domain?: string;
+  } = {
     httpOnly: true,
     secure: true,
     sameSite: "lax",
     maxAge: 600,
     path: "/",
-  });
+  };
+
+  if (cookieDomain) {
+    stateCookieOptions.domain = cookieDomain;
+  }
+
+  response.cookies.set("decap_oauth_state", state, stateCookieOptions);
 
   return response;
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 
+import { getOAuthCookieDomain, resolveCallbackUrl } from "../config";
 import { getGitHubClientId, getGitHubClientSecret } from "../env";
 
 type AccessTokenResponse = {
@@ -10,6 +11,8 @@ type AccessTokenResponse = {
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
+  const callbackUrl = resolveCallbackUrl(url);
+  const cookieDomain = getOAuthCookieDomain(url, callbackUrl);
   const code = url.searchParams.get("code");
   const state = url.searchParams.get("state");
   const { cookies } = await import("next/headers");
@@ -58,21 +61,34 @@ export async function GET(req: Request) {
     { headers: { "Content-Type": "text/html" } }
   );
 
-  response.cookies.set("decap_token", json.access_token, {
+  const tokenCookieOptions: {
+    httpOnly: true;
+    secure: true;
+    sameSite: "lax";
+    maxAge: number;
+    path: string;
+    domain?: string;
+  } = {
     httpOnly: true,
     secure: true,
     sameSite: "lax",
     maxAge: 3600,
     path: "/",
-  });
+  };
 
-  response.cookies.set("decap_oauth_state", "", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "lax",
+  const stateCookieOptions: typeof tokenCookieOptions = {
+    ...tokenCookieOptions,
     maxAge: 0,
-    path: "/",
-  });
+  };
+
+  if (cookieDomain) {
+    tokenCookieOptions.domain = cookieDomain;
+    stateCookieOptions.domain = cookieDomain;
+  }
+
+  response.cookies.set("decap_token", json.access_token, tokenCookieOptions);
+
+  response.cookies.set("decap_oauth_state", "", stateCookieOptions);
 
   return response;
 }
