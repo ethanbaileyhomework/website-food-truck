@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import YAML from "yaml";
 
-import configTemplate from "@/admin/config.yml";
+import { loadConfigTemplate } from "@/lib/cms/config-template";
 
 export const dynamic = "force-dynamic";
 
@@ -74,7 +74,7 @@ function applyRuntimeOverrides(config: ConfigData) {
 function getConfig(): ConfigData {
   if (!cachedConfig && !cachedError) {
     try {
-      const parsed = YAML.parse(configTemplate);
+      const parsed = YAML.parse(loadConfigTemplate());
 
       if (!parsed || typeof parsed !== "object") {
         throw new Error("Invalid CMS configuration template.");
