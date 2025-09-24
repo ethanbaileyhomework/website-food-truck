@@ -1,5 +1,5 @@
-import { loadStaticFile } from "@/lib/server/static-file";
+import cmsConfigTemplate from "@/admin/config.yml";
 
 export function loadConfigTemplate(): string {
-  return loadStaticFile("admin/config.yml");
+  return cmsConfigTemplate;
 }
