@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { parse } from "csv-parse/sync";
 import YAML from "yaml";
 
-import statsSettingsSource from "@/content/stats-settings.yaml";
+import { loadStaticFile } from "@/lib/server/static-file";
 import type { StatsApiResponse, StatsSettings } from "@/lib/types";
 
 const CACHE_DURATION = 10 * 60 * 1000; // 10 minutes
@@ -43,6 +43,7 @@ function buildFallback(stats: StatsSettings): StatsApiResponse {
   };
 }
 
+const statsSettingsSource = loadStaticFile("content/stats-settings.yaml");
 const statsSettings: StatsSettings = YAML.parse(statsSettingsSource);
 const disableRemoteFetch = parseBoolean(process.env.STATS_DISABLE_FETCH);
 
