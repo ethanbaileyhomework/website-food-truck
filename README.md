@@ -39,6 +39,8 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
    - `DECAP_GITHUB_CLIENT_ID` / `DECAP_GITHUB_CLIENT_SECRET` – credentials for the built-in GitHub OAuth flow (alternatively, set `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET`).
    - `DECAP_OAUTH_BASE_URL` – origin for your OAuth provider (for example `https://cms-auth.example.com`).
    - `DECAP_OAUTH_ENDPOINT` – endpoint path served by the provider (for example `/api/auth`).
+   - `DECAP_OAUTH_CALLBACK_PATH` – optional override for the callback path appended to the base URL (defaults to `callback`).
+   - `DECAP_OAUTH_CALLBACK_URL` – optional full callback URL override when you need an exact redirect URI for your OAuth app.
    - `DECAP_SITE_URL` / `DECAP_DISPLAY_URL` – optional values to control site and preview URLs displayed inside the CMS UI.
 4. Visit `/admin` on the deployed site to access the CMS once authentication is configured.
 5. Collections available:
