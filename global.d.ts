@@ -8,6 +8,11 @@ declare module "*.yaml" {
   export default content;
 }
 
+declare module "@/admin/config.yml" {
+  const content: string;
+  export default content;
+}
+
 declare global {
   interface Window {
     CMS?: {
