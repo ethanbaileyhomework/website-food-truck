@@ -1,11 +1,16 @@
 import { NextResponse } from "next/server";
 
+import { getGitHubClientId, getOAuthBaseUrl } from "../env";
+
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
-  const base = process.env.OAUTH_BASE_URL ?? new URL(req.url).origin;
+  const base = getOAuthBaseUrl() ?? new URL(req.url).origin;
   const redirectUri = `${base}/api/oauth/callback`;
-  const clientId = process.env.GITHUB_CLIENT_ID!;
+  const clientId = getGitHubClientId();
+  if (!clientId) {
+    return new NextResponse("Missing GitHub OAuth client ID", { status: 500 });
+  }
   const state = crypto.randomUUID();
 
   const url = new URL("https://github.com/login/oauth/authorize");

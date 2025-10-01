@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 
+import { getGitHubClientId, getGitHubClientSecret } from "../env";
+
 export const dynamic = "force-dynamic";
 
 export async function GET(req: Request) {
@@ -13,9 +15,15 @@ export async function GET(req: Request) {
     return new NextResponse("Invalid OAuth state", { status: 400 });
   }
 
+  const clientId = getGitHubClientId();
+  const clientSecret = getGitHubClientSecret();
+  if (!clientId || !clientSecret) {
+    return new NextResponse("Missing GitHub OAuth credentials", { status: 500 });
+  }
+
   const body = new URLSearchParams({
-    client_id: process.env.GITHUB_CLIENT_ID!,
-    client_secret: process.env.GITHUB_CLIENT_SECRET!,
+    client_id: clientId,
+    client_secret: clientSecret,
     code
   });
 
