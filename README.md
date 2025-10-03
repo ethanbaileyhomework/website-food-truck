@@ -30,6 +30,9 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
 
 ## Content editing with Decap CMS
 
+> **Quick reference:** The step-by-step walkthrough that non-technical editors can follow lives at
+> [`/editor-guide`](https://your-domain/editor-guide) on the live site and inside [`docs/editor-guide.md`](docs/editor-guide.md).
+
 1. Deploy the project to Cloudflare Pages. The CMS is pre-configured for the GitHub backend so editors authenticate with their GitHub accounts.
 2. Provision a GitHub OAuth integration (either an OAuth App, GitHub App or the official Decap CMS OAuth provider) and expose it via a Cloudflare Worker or other HTTPS endpoint.
 3. In Cloudflare Pages → **Settings → Environment variables**, add the following values for both Production and Preview environments:
@@ -45,7 +48,8 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
    - **Site Settings** – global contact details, donation links, map embed, service info, social links and analytics.
    - **Home Page**, **Stats Settings**, **About Page**, **Donate Page**, **Volunteer Page**, **Sponsors Page** – single-file collections for main copy and metadata.
    - **Team**, **Stories**, **Partners** – folder collections for repeatable entries with images and optional ordering.
-6. Media uploads are stored in `public/uploads/` and referenced automatically.
+6. Media uploads are stored in `public/uploads/` and referenced automatically. You can upload them straight from the CMS via the
+   **Upload** button next to any image field.
 
 The CMS can also run locally with `npx decap-server` and navigating to `http://localhost:3000/admin`.
 

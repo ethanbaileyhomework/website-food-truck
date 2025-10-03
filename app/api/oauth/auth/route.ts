@@ -13,6 +13,15 @@ export async function GET(req: Request) {
   }
   const state = crypto.randomUUID();
 
+  const isSecure = (() => {
+    try {
+      return new URL(base).protocol === "https:";
+    } catch (error) {
+      console.warn("Invalid OAUTH_BASE_URL, defaulting cookie to insecure", error);
+      return false;
+    }
+  })();
+
   const url = new URL("https://github.com/login/oauth/authorize");
   url.searchParams.set("client_id", clientId);
   url.searchParams.set("redirect_uri", redirectUri);
@@ -22,7 +31,11 @@ export async function GET(req: Request) {
   const res = NextResponse.redirect(url.toString());
   // set cookie on the RESPONSE, not via next/headers
   res.cookies.set("decap_oauth_state", state, {
-    httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 600
+    httpOnly: true,
+    secure: isSecure,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 600,
   });
   return res;
 }
