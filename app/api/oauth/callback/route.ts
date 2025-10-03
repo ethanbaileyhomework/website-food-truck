@@ -38,6 +38,8 @@ export async function GET(req: Request) {
     return new NextResponse("Auth failed", { status: 400 });
   }
 
+  const isSecure = url.protocol === "https:";
+
   // Send token back to Decap and close popup
   const html = `<!doctype html><meta charset="utf-8">
 <script>
@@ -51,8 +53,12 @@ export async function GET(req: Request) {
 
   const res = new NextResponse(html, { headers: { "Content-Type": "text/html" } });
   res.cookies.set("decap_token", data.access_token, {
-    httpOnly: true, secure: true, sameSite: "lax", path: "/", maxAge: 3600
+    httpOnly: true,
+    secure: isSecure,
+    sameSite: "lax",
+    path: "/",
+    maxAge: 3600,
   });
-  res.cookies.delete("decap_oauth_state");
+  res.cookies.delete("decap_oauth_state", { path: "/", secure: isSecure });
   return res;
 }
