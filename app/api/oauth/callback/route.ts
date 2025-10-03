@@ -59,6 +59,6 @@ export async function GET(req: Request) {
     path: "/",
     maxAge: 3600,
   });
-  res.cookies.delete("decap_oauth_state", { path: "/", secure: isSecure });
+  res.cookies.delete({ name: "decap_oauth_state", path: "/", secure: isSecure });
   return res;
 }
