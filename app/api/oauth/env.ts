@@ -13,9 +13,15 @@ const pickEnv = (...keys: (keyof NodeJS.ProcessEnv)[]) => {
 };
 
 export const getGitHubClientId = () =>
-  pickEnv("GITHUB_CLIENT_ID", "DECAP_GITHUB_CLIENT_ID");
+  pickEnv(
+    "GITHUB_CLIENT_ID",
+    "DECAP_GITHUB_CLIENT_ID",
+    "NEXT_PUBLIC_GITHUB_CLIENT_ID",
+    "NEXT_PUBLIC_DECAP_GITHUB_CLIENT_ID"
+  );
 
 export const getGitHubClientSecret = () =>
   pickEnv("GITHUB_CLIENT_SECRET", "DECAP_GITHUB_CLIENT_SECRET");
 
-export const getOAuthBaseUrl = () => pickEnv("OAUTH_BASE_URL");
+export const getOAuthBaseUrl = () =>
+  pickEnv("OAUTH_BASE_URL", "DECAP_OAUTH_BASE_URL");
