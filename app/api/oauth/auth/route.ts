@@ -8,6 +8,7 @@ export async function GET(req: Request) {
   const base = getOAuthBaseUrl() ?? new URL(req.url).origin;
   const redirectUri = `${base}/api/oauth/callback`;
   const clientId = getGitHubClientId();
+  
   if (!clientId) {
     return new NextResponse("Missing GitHub OAuth client ID", { status: 500 });
   }

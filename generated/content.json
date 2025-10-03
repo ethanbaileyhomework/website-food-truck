@@ -342,7 +342,7 @@
         "title": "Privacy",
         "description": "Privacy statement for Cranbourne Food Truck guests, supporters and volunteers."
       },
-      "content": "## Privacy statement\n\nThis is a placeholder privacy statement. Update this page through the CMS with your organisation’s privacy policy, including how you collect, use and store personal information.\n\nFor questions please email [hello@cranbournefoodtruck.com](mailto:hello@cranbournefoodtruck.com)."
+      "content": "## Privacy statement\r\n\r\nThis is a placeholder privacy statement. Update this page through the CMS with your organisation’s privacy policy, including how you collect, use and store personal information.\r\n\r\nFor questions please email [hello@cranbournefoodtruck.com](mailto:hello@cranbournefoodtruck.com)."
     },
     "terms": {
       "slug": "terms",
@@ -350,7 +350,7 @@
         "title": "Terms",
         "description": "Terms of use for Cranbourne Food Truck services and website."
       },
-      "content": "## Terms of use\n\nThis is a placeholder terms of use page. Provide your service terms through the CMS, including participation expectations, disclaimers and any limitations of liability.\n\nContact us at [hello@cranbournefoodtruck.com](mailto:hello@cranbournefoodtruck.com) with any questions."
+      "content": "## Terms of use\r\n\r\nThis is a placeholder terms of use page. Provide your service terms through the CMS, including participation expectations, disclaimers and any limitations of liability.\r\n\r\nContact us at [hello@cranbournefoodtruck.com](mailto:hello@cranbournefoodtruck.com) with any questions."
     }
   },
   "team": [
