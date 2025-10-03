@@ -1,58 +1,92 @@
 # Admin Page Setup Instructions
 
-## Issue Identified
-The admin page is working correctly, but GitHub OAuth credentials are missing, which prevents authentication for content editing.
+## Prerequisites
 
-## ✅ **SOLUTION - WORKING NOW!**
+Before you can use the admin page, you need to set up GitHub OAuth credentials.
 
-The admin page is now working! I've fixed the environment variable loading issue. Here's what was done:
+## Setup Steps
 
 ### 1. Create a GitHub OAuth App
 1. Go to https://github.com/settings/applications/new
 2. Fill in the application details:
    - **Application name**: Cranbourne Food Truck CMS (or any name you prefer)
-   - **Homepage URL**: http://localhost:3000
+   - **Homepage URL**: http://localhost:3000 (for local development)
    - **Authorization callback URL**: http://localhost:3000/api/oauth/callback
 3. Click "Register application"
-4. Copy the **Client ID** and **Client Secret**
+4. Copy the **Client ID** and **Client Secret** (you'll need these in the next step)
 
 **IMPORTANT**: Make sure the Authorization callback URL is exactly: `http://localhost:3000/api/oauth/callback`
 
-### 2. Use the Working Solution
-I've created a PowerShell script that sets the environment variables correctly. To start the admin page:
+### 2. Configure Environment Variables
 
-**Option A: Use the PowerShell Script (Recommended)**
+Create a `.env.local` file in the root of the project:
+
+```bash
+# Copy the example file
+cp .env.local.example .env.local
+```
+
+Then edit `.env.local` and replace the placeholder values with your actual GitHub OAuth credentials:
+
+```bash
+GITHUB_CLIENT_ID=your_actual_client_id_here
+GITHUB_CLIENT_SECRET=your_actual_client_secret_here
+DECAP_GITHUB_REPO=ethanbaileyhomework/website-food-truck
+DECAP_BACKEND_BRANCH=main
+DECAP_OAUTH_BASE_URL=http://localhost:3000
+DECAP_OAUTH_ENDPOINT=auth
+DECAP_SITE_URL=http://localhost:3000
+DECAP_DISPLAY_URL=http://localhost:3000
+```
+
+**⚠️ SECURITY WARNING**: Never commit your `.env.local` file to git! It's already in `.gitignore`.
+
+### 3. Start the Development Server
+
+**Option A: Use the startup script (Recommended)**
+
+For Windows (PowerShell):
 ```powershell
 .\start-dev.ps1
 ```
 
-**Option B: Set Environment Variables Manually**
-```powershell
-$env:GITHUB_CLIENT_ID="Ov23lifXUhUiG4vCZHqd"
-$env:GITHUB_CLIENT_SECRET="5cb77d19ba008d68828300ed145ca9410ab0512a"
-$env:DECAP_GITHUB_REPO="ethanbaileyhomework/website-food-truck"
-$env:DECAP_BACKEND_BRANCH="main"
-$env:DECAP_OAUTH_BASE_URL="http://localhost:3000"
-$env:DECAP_OAUTH_ENDPOINT="auth"
-$env:DECAP_SITE_URL="http://localhost:3000"
-$env:DECAP_DISPLAY_URL="http://localhost:3000"
-npm run dev
+For Linux/Mac:
+```bash
+./start-dev.sh
 ```
 
-### 3. Test the Admin Page
+**Option B: Manual startup**
+```bash
+npm run dev
+```
+(Note: Make sure your `.env.local` file is properly configured)
+
+### 4. Access the Admin Page
 1. Navigate to http://localhost:3000/admin
 2. You should see the admin guide at the top
 3. Below that, the Decap CMS interface should load
 4. Click "Login with GitHub" to authenticate
 5. Once authenticated, you can edit all content through the CMS interface
 
-## What's Working Now
-- ✅ Admin page loads correctly
-- ✅ CMS configuration API works
-- ✅ All components are properly set up
-- ✅ Dependencies are installed
-- ✅ **GitHub OAuth is working!**
-- ✅ **Environment variables are properly loaded!**
+## Troubleshooting
+
+### "Missing GitHub OAuth client ID" Error
+- Make sure you've created the `.env.local` file
+- Verify that `GITHUB_CLIENT_ID` is set in `.env.local`
+- Restart the dev server after creating/modifying `.env.local`
+
+### "Missing GitHub OAuth credentials" Error
+- Make sure both `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` are set in `.env.local`
+- Verify there are no extra spaces or quotes in your `.env.local` file
+
+### "Invalid OAuth state" Error
+- Clear your browser cookies for localhost:3000
+- Try the authentication flow again
+
+### Admin Page Doesn't Load
+- Check the browser console for errors (F12 → Console tab)
+- Make sure the dev server is running without errors
+- Verify that all dependencies are installed (`npm install`)
 
 ## What You Can Edit
 Once authenticated, you can edit:
@@ -68,22 +102,25 @@ Once authenticated, you can edit:
 - **Partners** - Partner organizations
 - **Legal Pages** - Privacy policy and terms of use
 
-## 🎯 **Pull Request Automation**
+## 🎯 Pull Request Automation
 **Yes, Decap CMS automatically creates pull requests!** When you edit content and click "Publish":
 - ✅ **Automatically creates a PR** on GitHub
 - ✅ **Commits your changes** to a new branch
 - ✅ **Opens the PR** for review
 - ✅ **You merge it** to make changes live
 
-The admin page is now fully functional!
+## Deployment to Production
 
-## 🎉 **SUCCESS!**
+For production deployment (e.g., Cloudflare Pages):
 
-Your admin page is now working perfectly! You can:
+1. In your hosting platform's environment variables, add:
+   - `GITHUB_CLIENT_ID` - Your production GitHub OAuth App Client ID
+   - `GITHUB_CLIENT_SECRET` - Your production GitHub OAuth App Client Secret
+   - `DECAP_GITHUB_REPO` - `ethanbaileyhomework/website-food-truck`
+   - `DECAP_BACKEND_BRANCH` - `main`
 
-1. **Go to http://localhost:3000/admin**
-2. **Click "Login with GitHub"** 
-3. **Authenticate with your GitHub account**
-4. **Start editing your website content!**
+2. Update your GitHub OAuth App settings:
+   - **Homepage URL**: `https://your-production-domain.com`
+   - **Authorization callback URL**: `https://your-production-domain.com/api/oauth/callback`
 
-Every time you make changes and click "Publish", Decap CMS will automatically create a pull request on GitHub for you to review and merge.
+3. The admin page will be available at `https://your-production-domain.com/admin`

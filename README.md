@@ -14,9 +14,28 @@ A modern, community-focused website for Cranbourne Food Truck built with Next.js
 
 ## Local development
 
+### Prerequisites
+- Node.js 18 or later
+- npm or yarn
+
+### Setup
+
+1. Clone the repository and install dependencies:
 ```bash
 npm install
+```
+
+2. Set up admin access (optional, only needed for content editing):
+   - See [`ADMIN_SETUP.md`](ADMIN_SETUP.md) for detailed instructions
+   - Create a `.env.local` file with your GitHub OAuth credentials
+   - Or copy `.env.local.example` and fill in your values
+
+3. Start the development server:
+```bash
 npm run dev
+# Or use the helper script that loads .env.local:
+./start-dev.sh  # Linux/Mac
+.\start-dev.ps1 # Windows PowerShell
 ```
 
 The app will be available at [http://localhost:3000](http://localhost:3000).
@@ -30,28 +49,33 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
 
 ## Content editing with Decap CMS
 
-> **Quick reference:** The step-by-step walkthrough that non-technical editors can follow lives at
-> [`/editor-guide`](https://your-domain/editor-guide) on the live site and inside [`docs/editor-guide.md`](docs/editor-guide.md).
+> **Quick reference:** 
+> - For **local development setup**, see [`ADMIN_SETUP.md`](ADMIN_SETUP.md)
+> - For **editor instructions**, see the step-by-step walkthrough at [`/editor-guide`](https://your-domain/editor-guide) on the live site or in [`docs/editor-guide.md`](docs/editor-guide.md)
 
-1. Deploy the project to Cloudflare Pages. The CMS is pre-configured for the GitHub backend so editors authenticate with their GitHub accounts.
-2. Provision a GitHub OAuth integration (either an OAuth App, GitHub App or the official Decap CMS OAuth provider) and expose it via a Cloudflare Worker or other HTTPS endpoint.
+### Production Deployment
+
+1. Deploy the project to Cloudflare Pages (or your preferred hosting platform)
+2. Create a GitHub OAuth App at https://github.com/settings/applications/new
 3. In Cloudflare Pages → **Settings → Environment variables**, add the following values for both Production and Preview environments:
-   - `DECAP_GITHUB_REPO` – `owner/repo` slug for this site.
-   - `DECAP_BACKEND_BRANCH` – optional override if your default branch is not `main`.
-   - `DECAP_GITHUB_APP_ID` – client/app ID from your GitHub OAuth integration (optional but recommended when using GitHub Apps).
-   - `DECAP_GITHUB_CLIENT_ID` / `DECAP_GITHUB_CLIENT_SECRET` – credentials for the built-in GitHub OAuth flow (alternatively, set `GITHUB_CLIENT_ID` / `GITHUB_CLIENT_SECRET`).
-   - `DECAP_OAUTH_BASE_URL` – origin for your OAuth provider (for example `https://cms-auth.example.com`).
-   - `DECAP_OAUTH_ENDPOINT` – endpoint path served by the provider (for example `/api/auth`).
-   - `DECAP_SITE_URL` / `DECAP_DISPLAY_URL` – optional values to control site and preview URLs displayed inside the CMS UI.
-4. Visit `/admin` on the deployed site to access the CMS once authentication is configured.
-5. Collections available:
+   - `GITHUB_CLIENT_ID` – Client ID from your GitHub OAuth App
+   - `GITHUB_CLIENT_SECRET` – Client Secret from your GitHub OAuth App
+   - `DECAP_GITHUB_REPO` – `ethanbaileyhomework/website-food-truck` (or your fork)
+   - `DECAP_BACKEND_BRANCH` – `main` (or your default branch)
+   
+   Optional environment variables:
+   - `DECAP_OAUTH_BASE_URL` – Custom OAuth provider origin (if not using built-in)
+   - `DECAP_OAUTH_ENDPOINT` – Custom OAuth endpoint path (if not using built-in)
+   - `DECAP_SITE_URL` / `DECAP_DISPLAY_URL` – Control site and preview URLs in CMS UI
+
+4. Visit `/admin` on the deployed site to access the CMS
+
+### Available Collections
    - **Site Settings** – global contact details, donation links, map embed, service info, social links and analytics.
    - **Home Page**, **Stats Settings**, **About Page**, **Donate Page**, **Volunteer Page**, **Sponsors Page** – single-file collections for main copy and metadata.
    - **Team**, **Stories**, **Partners** – folder collections for repeatable entries with images and optional ordering.
-6. Media uploads are stored in `public/uploads/` and referenced automatically. You can upload them straight from the CMS via the
-   **Upload** button next to any image field.
 
-The CMS can also run locally with `npx decap-server` and navigating to `http://localhost:3000/admin`.
+Media uploads are stored in `public/uploads/` and referenced automatically. You can upload them straight from the CMS via the **Upload** button next to any image field.
 
 ## Live stats setup
 
