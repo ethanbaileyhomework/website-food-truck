@@ -52,19 +52,13 @@ export async function GET(req: Request) {
 </script>OK`;
 
   const res = new NextResponse(html, { headers: { "Content-Type": "text/html" } });
-  res.cookies.set("decap_token", data.access_token, {
+  const cookieOptions = {
     httpOnly: true,
     secure: isSecure,
-    sameSite: "lax",
+    sameSite: "lax" as const,
     path: "/",
-    maxAge: 3600,
-  });
-  res.cookies.set("decap_oauth_state", "", {
-    httpOnly: true,
-    secure: isSecure,
-    sameSite: "lax",
-    path: "/",
-    maxAge: 0,
-  });
+  };
+  res.cookies.set("decap_token", data.access_token, { ...cookieOptions, maxAge: 3600 });
+  res.cookies.set("decap_oauth_state", "", { ...cookieOptions, maxAge: 0 });
   return res;
 }
