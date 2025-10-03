@@ -25,3 +25,6 @@ export const getGitHubClientSecret = () =>
 
 export const getOAuthBaseUrl = () =>
   pickEnv("OAUTH_BASE_URL", "DECAP_OAUTH_BASE_URL");
+
+export const getOAuthEndpoint = () =>
+  pickEnv("OAUTH_ENDPOINT", "DECAP_OAUTH_ENDPOINT");
