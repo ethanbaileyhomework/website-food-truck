@@ -1,27 +1,65 @@
 import { NextResponse } from "next/server";
 
-import { getGitHubClientId, getOAuthBaseUrl } from "../env";
+import {
+  getGitHubClientId,
+  getOAuthBaseUrl,
+  getOAuthEndpoint,
+} from "../env";
 
 export const dynamic = "force-dynamic";
 
+const DEFAULT_ENDPOINT_PATH = "/api/oauth";
+const DEFAULT_CALLBACK_PATH = `${DEFAULT_ENDPOINT_PATH}/callback`;
+
+function buildCallbackPath(endpoint: string | undefined | null) {
+  if (!endpoint) {
+    return DEFAULT_CALLBACK_PATH;
+  }
+
+  const trimmed = endpoint.trim();
+
+  if (!trimmed) {
+    return DEFAULT_CALLBACK_PATH;
+  }
+
+  const normalized = trimmed.startsWith("/") ? trimmed : `/${trimmed}`;
+  const withoutTrailingSlash = normalized.replace(/\/+$/, "");
+
+  if (!withoutTrailingSlash) {
+    return DEFAULT_CALLBACK_PATH;
+  }
+
+  return `${withoutTrailingSlash}/callback`;
+}
+
 export async function GET(req: Request) {
-  const base = getOAuthBaseUrl() ?? new URL(req.url).origin;
-  const redirectUri = `${base}/api/oauth/callback`;
+  const requestUrl = new URL(req.url);
+  const base = getOAuthBaseUrl();
+  const endpoint = getOAuthEndpoint();
+  const callbackPath = buildCallbackPath(endpoint);
+  const redirectUri = (() => {
+    if (!base) {
+      return new URL(callbackPath, requestUrl.origin).toString();
+    }
+
+    try {
+      return new URL(callbackPath, base).toString();
+    } catch (error) {
+      console.warn(
+        "Invalid OAUTH_BASE_URL provided, falling back to request origin",
+        error
+      );
+      return new URL(callbackPath, requestUrl.origin).toString();
+    }
+  })();
   const clientId = getGitHubClientId();
-  
+
   if (!clientId) {
     return new NextResponse("Missing GitHub OAuth client ID", { status: 500 });
   }
   const state = crypto.randomUUID();
 
-  const isSecure = (() => {
-    try {
-      return new URL(base).protocol === "https:";
-    } catch (error) {
-      console.warn("Invalid OAUTH_BASE_URL, defaulting cookie to insecure", error);
-      return false;
-    }
-  })();
+  const isSecure = requestUrl.protocol === "https:";
 
   const url = new URL("https://github.com/login/oauth/authorize");
   url.searchParams.set("client_id", clientId);
