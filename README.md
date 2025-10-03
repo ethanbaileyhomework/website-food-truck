@@ -56,19 +56,26 @@ The app will be available at [http://localhost:3000](http://localhost:3000).
 ### Production Deployment
 
 1. Deploy the project to Cloudflare Pages (or your preferred hosting platform)
-2. Create a GitHub OAuth App at https://github.com/settings/applications/new
+2. Create a production GitHub OAuth App at https://github.com/settings/applications/new
+   - **Application name**: Cranbourne Food Truck CMS Production
+   - **Homepage URL**: `https://cranbournefoodtruck.com` (replace with your domain)
+   - **Authorization callback URL**: `https://cranbournefoodtruck.com/api/oauth/callback` (replace with your domain)
+
 3. In Cloudflare Pages → **Settings → Environment variables**, add the following values for both Production and Preview environments:
    - `GITHUB_CLIENT_ID` – Client ID from your GitHub OAuth App
    - `GITHUB_CLIENT_SECRET` – Client Secret from your GitHub OAuth App
    - `DECAP_GITHUB_REPO` – `ethanbaileyhomework/website-food-truck` (or your fork)
    - `DECAP_BACKEND_BRANCH` – `main` (or your default branch)
    
-   Optional environment variables:
-   - `DECAP_OAUTH_BASE_URL` – Custom OAuth provider origin (if not using built-in)
-   - `DECAP_OAUTH_ENDPOINT` – Custom OAuth endpoint path (if not using built-in)
-   - `DECAP_SITE_URL` / `DECAP_DISPLAY_URL` – Control site and preview URLs in CMS UI
+   Optional environment variables for production:
+   - `DECAP_OAUTH_BASE_URL` – Your production domain (e.g., `https://cranbournefoodtruck.com`)
+   - `DECAP_OAUTH_ENDPOINT` – OAuth endpoint path (default: `auth`)
+   - `DECAP_SITE_URL` – Your production domain (e.g., `https://cranbournefoodtruck.com`)
+   - `DECAP_DISPLAY_URL` – Display URL in CMS UI (e.g., `https://cranbournefoodtruck.com`)
 
 4. Visit `/admin` on the deployed site to access the CMS
+
+**Note**: Make sure to use HTTPS URLs for production. The OAuth callback URL must match exactly what you configured in your GitHub OAuth App.
 
 ### Available Collections
    - **Site Settings** – global contact details, donation links, map embed, service info, social links and analytics.

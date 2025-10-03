@@ -113,14 +113,45 @@ Once authenticated, you can edit:
 
 For production deployment (e.g., Cloudflare Pages):
 
-1. In your hosting platform's environment variables, add:
+### Option A: Using Hosting Platform Environment Variables (Recommended)
+
+1. Create a production GitHub OAuth App at https://github.com/settings/applications/new with:
+   - **Application name**: Cranbourne Food Truck CMS Production
+   - **Homepage URL**: `https://cranbournefoodtruck.com`
+   - **Authorization callback URL**: `https://cranbournefoodtruck.com/api/oauth/callback`
+
+2. In your hosting platform's environment variables (e.g., Cloudflare Pages → Settings → Environment variables), add:
    - `GITHUB_CLIENT_ID` - Your production GitHub OAuth App Client ID
    - `GITHUB_CLIENT_SECRET` - Your production GitHub OAuth App Client Secret
    - `DECAP_GITHUB_REPO` - `ethanbaileyhomework/website-food-truck`
    - `DECAP_BACKEND_BRANCH` - `main`
 
-2. Update your GitHub OAuth App settings:
-   - **Homepage URL**: `https://your-production-domain.com`
-   - **Authorization callback URL**: `https://your-production-domain.com/api/oauth/callback`
+3. The admin page will be available at `https://cranbournefoodtruck.com/admin`
 
-3. The admin page will be available at `https://your-production-domain.com/admin`
+### Option B: Using .env.local for Production (Alternative)
+
+If you're deploying to a platform that supports `.env.local` files, create a production `.env.local`:
+
+```bash
+# GitHub OAuth Configuration for Decap CMS - PRODUCTION
+
+# GitHub OAuth App credentials (from your production OAuth app)
+GITHUB_CLIENT_ID=your_production_client_id_here
+GITHUB_CLIENT_SECRET=your_production_client_secret_here
+
+# Repository configuration
+DECAP_GITHUB_REPO=ethanbaileyhomework/website-food-truck
+DECAP_BACKEND_BRANCH=main
+
+# OAuth URLs (for production - use HTTPS)
+DECAP_OAUTH_BASE_URL=https://cranbournefoodtruck.com
+DECAP_OAUTH_ENDPOINT=auth
+DECAP_SITE_URL=https://cranbournefoodtruck.com
+DECAP_DISPLAY_URL=https://cranbournefoodtruck.com
+```
+
+**⚠️ IMPORTANT**:
+- Use HTTPS (not HTTP) for all production URLs
+- Make sure your GitHub OAuth App's Authorization callback URL is set to: `https://cranbournefoodtruck.com/api/oauth/callback`
+- Never commit your production `.env.local` file to git!
+- Keep your production credentials separate from your local development credentials
