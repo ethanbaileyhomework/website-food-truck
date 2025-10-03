@@ -12,13 +12,21 @@ export async function GET(req: Request) {
   const cookieState = cookies().get("decap_oauth_state")?.value;
 
   if (!code || !state || state !== cookieState) {
-    return new NextResponse("Invalid OAuth state", { status: 400 });
+    console.error("Invalid OAuth state. Code:", !!code, "State match:", state === cookieState);
+    return new NextResponse(
+      "Invalid OAuth state. Please try logging in again. If this persists, clear your browser cookies and try again.", 
+      { status: 400 }
+    );
   }
 
   const clientId = getGitHubClientId();
   const clientSecret = getGitHubClientSecret();
   if (!clientId || !clientSecret) {
-    return new NextResponse("Missing GitHub OAuth credentials", { status: 500 });
+    console.error("Missing GitHub OAuth credentials. ClientID:", !!clientId, "ClientSecret:", !!clientSecret);
+    return new NextResponse(
+      "Missing GitHub OAuth credentials. Please configure your .env.local file with GITHUB_CLIENT_ID and GITHUB_CLIENT_SECRET. See ADMIN_SETUP.md for instructions.", 
+      { status: 500 }
+    );
   }
 
   const body = new URLSearchParams({
@@ -32,10 +40,14 @@ export async function GET(req: Request) {
     headers: { Accept: "application/json" },
     body
   });
-  const data = (await r.json()) as { access_token?: string; error?: string };
+  const data = (await r.json()) as { access_token?: string; error?: string; error_description?: string };
 
   if (!data.access_token) {
-    return new NextResponse("Auth failed", { status: 400 });
+    console.error("GitHub OAuth failed:", data.error, data.error_description);
+    return new NextResponse(
+      `GitHub OAuth authentication failed: ${data.error || 'Unknown error'}. ${data.error_description || 'Please check your OAuth credentials.'}`, 
+      { status: 400 }
+    );
   }
 
   const isSecure = url.protocol === "https:";

@@ -55,7 +55,11 @@ export async function GET(req: Request) {
   const clientId = getGitHubClientId();
 
   if (!clientId) {
-    return new NextResponse("Missing GitHub OAuth client ID", { status: 500 });
+    console.error("Missing GitHub OAuth client ID. Please set GITHUB_CLIENT_ID in your environment variables.");
+    return new NextResponse(
+      "Missing GitHub OAuth client ID. Please configure your .env.local file with GITHUB_CLIENT_ID. See ADMIN_SETUP.md for instructions.", 
+      { status: 500 }
+    );
   }
   const state = crypto.randomUUID();
 
