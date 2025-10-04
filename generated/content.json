@@ -2,7 +2,7 @@
   "siteSettings": {
     "siteName": "Cranbourne Food Truck",
     "siteTagline": "Nourishing community with dignity and care.",
-    "logo": "",
+    "logo": "/images/logo-cft.svg",
     "primaryColor": "#C3423F",
     "navigation": [
       {
