@@ -30,10 +30,10 @@ function ensureBackend(config: ConfigData) {
   config.backend = {
     ...backend,
     name: "github",
-    repo: process.env.DECAP_GITHUB_REPO,
-    branch: process.env.DECAP_BACKEND_BRANCH,
-    base_url: process.env.DECAP_OAUTH_BASE_URL,
-    auth_endpoint: process.env.DECAP_OAUTH_ENDPOINT,
+    repo: process.env.DECAP_GITHUB_REPO ?? backend.repo,
+    branch: process.env.DECAP_BACKEND_BRANCH ?? backend.branch,
+    base_url: process.env.DECAP_OAUTH_BASE_URL ?? backend.base_url,
+    auth_endpoint: process.env.DECAP_OAUTH_ENDPOINT ?? "auth",
   };
 }
 

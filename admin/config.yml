@@ -3,7 +3,6 @@ backend:
   branch: main
   repo: ethanbaileyhomework/website-food-truck
 
-
 media_folder: "public/uploads"
 public_folder: "/uploads"
 
