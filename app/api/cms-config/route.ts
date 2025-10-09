@@ -30,10 +30,10 @@ function ensureBackend(config: ConfigData) {
   config.backend = {
     ...backend,
     name: "github",
-    repo: "ethanbaileyhomework/website-food-truck",
-    branch: "main",
-    base_url: "/api/oauth",
-    auth_endpoint: "auth",
+    repo: process.env.DECAP_GITHUB_REPO,
+    branch: process.env.DECAP_BACKEND_BRANCH,
+    base_url: process.env.DECAP_OAUTH_BASE_URL,
+    auth_endpoint: process.env.DECAP_OAUTH_ENDPOINT,
   };
 }
 
