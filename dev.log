@@ -1,0 +1,11 @@
+
+> website-food-truck@0.1.0 predev
+> npm run generate:content
+
+
+> website-food-truck@0.1.0 generate:content
+> node scripts/generate-content.mjs
+
+
+> website-food-truck@0.1.0 dev
+> next dev
