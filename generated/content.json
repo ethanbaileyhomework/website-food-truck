@@ -355,23 +355,13 @@
   },
   "team": [
     {
-      "slug": "amira-patel",
-      "data": {
-        "name": "Amira Patel",
-        "role": "Community Navigator",
-        "headshot": "/images/team-amira.svg",
-        "order": 3
-      },
-      "content": "Amira connects guests with housing, health and employment services through trusted relationships."
-    },
-    {
       "slug": "jane-doe",
       "data": {
         "name": "Jane Doe",
         "role": "Program Director",
         "email": "jane@cranbournefoodtruck.com",
         "headshot": "/images/team-jane.svg",
-        "order": 1
+        "displayOrder": 1
       },
       "content": "Jane leads our volunteers and community partnerships, making sure every guest is welcomed with warmth."
     },
@@ -381,9 +371,19 @@
         "name": "Sam Lee",
         "role": "Head Chef",
         "headshot": "/images/team-sam.svg",
-        "order": 2
+        "displayOrder": 2
       },
       "content": "Sam curates seasonal menus using donated produce and ensures every meal is both delicious and nourishing."
+    },
+    {
+      "slug": "amira-patel",
+      "data": {
+        "name": "Amira Patel",
+        "role": "Community Navigator",
+        "headshot": "/images/team-amira.svg",
+        "displayOrder": 3
+      },
+      "content": "Amira connects guests with housing, health and employment services through trusted relationships."
     }
   ],
   "stories": [

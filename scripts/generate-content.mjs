@@ -42,6 +42,17 @@ async function readMarkdownCollection(folder) {
         return { slug, data, content };
       })
   );
+
+  // Sort by displayOrder, then by slug
+  items.sort((a, b) => {
+    const orderA = a.data.displayOrder ?? Infinity;
+    const orderB = b.data.displayOrder ?? Infinity;
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+    return a.slug.localeCompare(b.slug);
+  });
+
   return items;
 }
 
